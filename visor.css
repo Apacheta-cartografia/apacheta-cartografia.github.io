@@ -138,3 +138,20 @@ h2, .marca-nombre strong { font-family: Inter, sans-serif; }
   .toggle-panel { display: block; }
   .ficha { left: 8px; right: 8px; bottom: 24px; width: auto; }
 }
+
+/* ---------- Árbol de capas (v2) ---------- */
+.item-texto { flex: 1; min-width: 0; }
+.item-flecha { flex: none; font-size: 13px; color: var(--gris); margin-top: 2px; }
+.lista li.abierto { background: #FBFAF7; }
+.subcapas { list-style: none; margin: 0; padding: 4px 20px 14px 44px; display: flex; flex-direction: column; gap: 2px; }
+.subcapas li { border: 0; }
+.subcapas label {
+  display: flex; align-items: center; gap: 10px; min-height: 36px;
+  font-size: 14px; color: var(--tinta); cursor: pointer;
+}
+.subcapas input { width: 18px; height: 18px; margin: 0; accent-color: var(--tinta); flex: none; }
+.subcapas .muestra { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 0 1px #16201D55; flex: none; }
+.subcapas .muestra.linea { width: 18px; height: 0; border-radius: 0; border: 0; border-top: 3px dashed; box-shadow: none; background: transparent !important; }
+.subcapas .cuenta { margin-left: auto; font-size: 12px; color: var(--gris); font-variant-numeric: tabular-nums; }
+.subcapas .cargando { font-size: 13px; color: var(--gris); padding: 6px 0; }
+.ficha-leyenda { font-style: italic; }

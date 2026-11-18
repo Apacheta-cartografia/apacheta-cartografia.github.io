@@ -1,12 +1,9 @@
-{
- "type": "FeatureCollection",
- "features": [
-  {"type": "Feature", "properties": {"nombre": "Cumbre (torreón E)", "tipo": "cumbre", "altitud": 6893, "nota": "Cumbre doble: dos torreones de igual altura a ~50 m. 6893 m (DGPS); IGN Argentina: 6879 m."}, "geometry": {"type": "Point", "coordinates": [-68.54139, -27.10972]}},
-  {"type": "Feature", "properties": {"nombre": "Torreón O", "tipo": "cumbre", "nota": "Torreón oeste de la cumbre doble."}, "geometry": {"type": "Point", "coordinates": [-68.54194, -27.10972]}},
-  {"type": "Feature", "properties": {"nombre": "Refugio Tejos", "tipo": "refugio", "altitud": 5834, "nota": "Sin guarda, 6 camas, máx. 20 personas. Tejos–cumbre: 6–8 h de subida, 3 h de bajada."}, "geometry": {"type": "Point", "coordinates": [-68.53821, -27.08759]}},
-  {"type": "Feature", "properties": {"nombre": "Refugio Atacama", "tipo": "refugio", "altitud": 5250, "nota": "Ruta normal chilena (PD). Atacama–Tejos: 3,7 km."}, "geometry": {"type": "Point", "coordinates": [-68.5475, -27.05972]}},
-  {"type": "Feature", "properties": {"nombre": "Campamento alto", "tipo": "campamento", "altitud": 5748, "nota": "Ruta argentina."}, "geometry": {"type": "Point", "coordinates": [-68.51915, -27.13218]}},
-  {"type": "Feature", "properties": {"nombre": "El Arenal", "tipo": "campamento", "altitud": 5513, "nota": "Ruta argentina. Arenal–cumbre: ~7 km y 1400 m de desnivel."}, "geometry": {"type": "Point", "coordinates": [-68.49919, -27.14957]}},
-  {"type": "Feature", "properties": {"nombre": "Agua de Vicuñas", "tipo": "agua", "altitud": 4900, "nota": "Agua subterránea; puede faltar."}, "geometry": {"type": "Point", "coordinates": [-68.43, -27.1975]}}
- ]
-}
+{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"nombre":"Ruta normal chilena","tipo":"ruta","nota":"Grado PD. Atacama–Tejos 3,7 km; total 6,7 km y 1643 m de desnivel. Trazado esquemático: une los puntos de paso en línea recta, no es el track GPS real."},"geometry":{"type":"LineString","coordinates":[[-68.5475,-27.05972],[-68.53821,-27.08759],[-68.54139,-27.10972]]}},
+{"type":"Feature","properties":{"nombre":"Ruta argentina","tipo":"ruta","nota":"Arenal–cumbre: ~7 km y 1400 m de desnivel. Trazado esquemático: une los puntos de paso en línea recta, no es el track GPS real."},"geometry":{"type":"LineString","coordinates":[[-68.43,-27.1975],[-68.49919,-27.14957],[-68.51915,-27.13218],[-68.54139,-27.10972]]}},
+{"type":"Feature","properties":{"nombre":"Cumbre (torreón E)","tipo":"cumbre","altitud":6893,"nota":"Cumbre doble: dos torreones de igual altura a ~50 m. 6893 m (DGPS); IGN Argentina: 6879 m. Tramo final de 20–30 m con cuerda fija."},"geometry":{"type":"Point","coordinates":[-68.54139,-27.10972]}},
+{"type":"Feature","properties":{"nombre":"Torreón O","tipo":"cumbre","nota":"Torreón oeste de la cumbre doble."},"geometry":{"type":"Point","coordinates":[-68.54194,-27.10972]}},
+{"type":"Feature","properties":{"nombre":"Refugio Tejos","tipo":"refugio","altitud":5834,"nota":"Sin guarda, 6 camas, máx. 20 personas. Tejos–cumbre: 6–8 h de subida, 3 h de bajada."},"geometry":{"type":"Point","coordinates":[-68.53821,-27.08759]}},
+{"type":"Feature","properties":{"nombre":"Refugio Atacama","tipo":"refugio","altitud":5250,"nota":"Inicio de la ruta normal chilena."},"geometry":{"type":"Point","coordinates":[-68.5475,-27.05972]}},
+{"type":"Feature","properties":{"nombre":"Campamento alto","tipo":"campamento","altitud":5748,"nota":"Ruta argentina."},"geometry":{"type":"Point","coordinates":[-68.51915,-27.13218]}},
+{"type":"Feature","properties":{"nombre":"El Arenal","tipo":"campamento","altitud":5513,"nota":"Ruta argentina."},"geometry":{"type":"Point","coordinates":[-68.49919,-27.14957]}},
+{"type":"Feature","properties":{"nombre":"Agua de Vicuñas","tipo":"agua","altitud":4900,"nota":"Agua subterránea; puede faltar."},"geometry":{"type":"Point","coordinates":[-68.43,-27.1975]}}]}
