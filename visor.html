@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor territorial — Apacheta Cartografía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="visor.css">
+</head>
+<body>
+<div id="app">
+  <aside id="panel" aria-label="Proyectos">
+    <header class="marca">
+      <a href="./" target="_top" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
+      <p class="marca-sub">Visor territorial</p>
+    </header>
+
+    <div class="buscador">
+      <label for="buscar">Buscar</label>
+      <input id="buscar" type="search" placeholder="Nombre, lugar o tema" autocomplete="off">
+    </div>
+
+    <div id="filtros" class="filtros" role="group" aria-label="Filtrar por categoría"></div>
+
+    <p id="contador" class="contador"></p>
+    <ul id="lista" class="lista"></ul>
+  </aside>
+
+  <main id="mapa-wrap">
+    <div id="mapa" aria-label="Mapa"></div>
+    <button id="toggle-panel" class="toggle-panel" type="button" aria-controls="panel" aria-expanded="false">Proyectos</button>
+
+    <section id="ficha" class="ficha" hidden aria-live="polite">
+      <button id="ficha-cerrar" class="ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
+      <img id="ficha-img" class="ficha-img" alt="" hidden>
+      <p id="ficha-cat" class="ficha-cat"></p>
+      <h2 id="ficha-titulo"></h2>
+      <p id="ficha-meta" class="ficha-meta"></p>
+      <p id="ficha-desc" class="ficha-desc"></p>
+      <div id="ficha-leyenda" class="ficha-leyenda" hidden></div>
+      <div id="ficha-acciones" class="ficha-acciones"></div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="visor.js"></script>
+</body>
+</html>
