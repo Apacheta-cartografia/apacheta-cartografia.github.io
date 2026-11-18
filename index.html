@@ -3,49 +3,343 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Visor territorial — Apacheta Cartografía</title>
+<title>Apacheta Cartografía — Consultoría territorial</title>
+<meta name="description" content="Análisis territoriales, socioeconómicos y socioambientales, y cartografía profesional. Mendoza, Argentina.">
+<meta name="theme-color" content="#16201D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="visor.css">
+<style>
+:root{--tinta:#16201D;--texto:#3B4440;--gris:#4A524E;--linea:#DCDDD8;--fondo:#F6F6F3;--acento:#9A3F1C;--claro:#E3A383;--suave:#C8D0CC}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--tinta);background:var(--fondo)}
+h1,h2,h3,.marca strong{font-family:Inter,sans-serif;font-weight:700}
+a{color:var(--acento)}
+.cont{max-width:1240px;margin:0 auto;padding:0 28px}
+section{scroll-margin-top:72px}
+.kicker{margin:0;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--acento)}
+.titulo{margin:0;font-size:clamp(30px,3.6vw,42px);line-height:1.1;letter-spacing:-.015em}
+.bajada{margin:0;font-size:17px;line-height:1.6;color:var(--texto);max-width:46rem}
+.encabezado{display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.bloque{padding:88px 0}
+.blanco{background:#FFFFFF;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+.oscuro{background:var(--tinta);color:#FFFFFF}
+.oscuro .kicker{color:var(--claro)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:14px 26px;border-radius:6px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primario{background:var(--acento);color:#FFFFFF}
+.btn-primario:hover{background:#7E3216}
+.btn-borde{border-color:#8A968F;color:#FFFFFF}
+.btn-oscuro{border-color:var(--tinta);color:var(--tinta);background:transparent}
+
+/* Encabezado */
+header.barra{position:sticky;top:0;z-index:50;background:#FFFFFF;border-bottom:1px solid var(--linea)}
+.barra .cont{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 32px;padding-top:12px;padding-bottom:12px}
+.marca{text-decoration:none;color:var(--tinta);font-size:21px;display:flex;gap:8px;align-items:baseline}
+.marca span{color:var(--gris)}
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-size:14px;font-weight:500}
+nav a{color:var(--tinta);text-decoration:none;padding:10px 0}
+nav a.btn{padding:10px 20px;min-height:40px;background:var(--tinta);color:#FFFFFF}
+
+/* Portada */
+.portada .cont{display:flex;flex-wrap:wrap;gap:48px 72px;align-items:flex-end;padding-top:96px;padding-bottom:88px}
+.portada-texto{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:26px}
+.portada h1{margin:0;font-size:clamp(36px,5vw,60px);line-height:1.06;letter-spacing:-.02em}
+.portada p.bajada{color:var(--suave);font-size:18px}
+.acciones{display:flex;flex-wrap:wrap;gap:12px}
+.lineas{flex:1 1 320px;min-width:0;list-style:none;margin:0;padding:0;border-top:1px solid #3A4743}
+.lineas li{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid #3A4743;font-size:16px}
+.lineas b{font-family:Inter,sans-serif;color:var(--claro);width:28px}
+
+/* Visor */
+.visor-marco{border:1px solid #C9CBC4;border-radius:10px;overflow:hidden;background:#E9EBE6;height:640px}
+.visor-marco iframe{display:block;width:100%;height:100%;border:0}
+.visor-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:14px;font-size:14px;color:var(--gris)}
+.visor-pie a{font-weight:600}
+
+/* Servicios */
+.grilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;background:var(--linea);border:1px solid var(--linea)}
+.grilla article{background:#FFFFFF;padding:30px;display:flex;flex-direction:column;gap:12px}
+.grilla h3{margin:0;font-size:20px}
+.grilla p{margin:0;font-size:15px;line-height:1.6;color:var(--texto)}
+
+/* Mapas impresos */
+.producto{display:flex;flex-wrap:wrap;background:#FFFFFF;border:1px solid #C9CBC4;border-radius:10px;overflow:hidden}
+.producto-img{flex:1 1 360px;min-height:420px;background:#E9EBE6;display:flex;align-items:center;justify-content:center;padding:32px}
+.lamina{width:220px;height:312px;background:#FFFFFF;border:1px solid #C9CBC4;box-shadow:0 10px 30px rgba(22,32,29,.14);display:flex;flex-direction:column;justify-content:space-between;padding:16px}
+.lamina strong{font-family:Inter,sans-serif;font-size:15px}
+.lamina em{font-style:normal;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6A716B;text-align:center}
+.lamina small{display:flex;justify-content:space-between;font-size:10px;color:var(--gris)}
+.producto-info{flex:1 1 420px;min-width:0;padding:36px;display:flex;flex-direction:column;gap:18px}
+.producto-info h3{margin:0;font-size:28px;line-height:1.15}
+.producto-info p{margin:0;font-size:15px;line-height:1.6;color:var(--texto)}
+dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;font-size:14px}
+dt{color:var(--gris)}dd{margin:2px 0 0;font-weight:600}
+.formatos{display:flex;flex-wrap:wrap;gap:8px}
+.formatos button{min-height:44px;padding:10px 16px;border-radius:6px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border:1px solid #A9ABA3;background:#FFFFFF;color:var(--tinta)}
+.formatos button[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#FFFFFF}
+.compra{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding-top:20px;border-top:1px solid var(--linea)}
+.precio{font-family:Inter,sans-serif;font-weight:700;font-size:26px}
+
+/* Metodología */
+.pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.pasos div{border-top:1px solid var(--claro);padding-top:20px;display:flex;flex-direction:column;gap:10px}
+.pasos b{font-family:Inter,sans-serif;color:var(--claro);font-size:14px}
+.pasos h3{margin:0;font-size:19px}
+.pasos p{margin:0;font-size:15px;line-height:1.6;color:var(--suave)}
+
+/* Equipo */
+.equipo-intro{display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;margin-bottom:36px}
+.equipo-intro>*{flex:1 1 420px;min-width:0}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.tarjetas article{background:#FFFFFF;border:1px solid var(--linea);border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:10px}
+.tarjetas h3{margin:0;font-size:19px}
+.tarjetas .rol{margin:0;font-size:13px;font-weight:600;color:var(--acento)}
+.tarjetas p{margin:0;font-size:14px;line-height:1.6;color:var(--texto)}
+
+/* Contacto */
+.contacto .cont{display:flex;flex-wrap:wrap;gap:48px}
+.contacto-datos{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.contacto-datos ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--texto)}
+form{flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.fila{display:flex;flex-wrap:wrap;gap:16px}
+.fila label{flex:1 1 200px}
+label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+input,select,textarea{font:inherit;font-weight:400;padding:13px 14px;border:1px solid #A9ABA3;border-radius:6px;background:var(--fondo);color:var(--tinta)}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acento);outline-offset:1px}
+.aviso{margin:0;font-size:14px;color:var(--texto)}
+
+footer{background:var(--tinta);color:var(--suave);font-size:13px}
+footer .cont{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center;padding-top:36px;padding-bottom:36px}
+footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)}
+
+@media (max-width:760px){
+  .bloque{padding:64px 0}
+  .portada .cont{padding-top:64px;padding-bottom:64px}
+  .visor-marco{height:560px}
+  nav{gap:2px 16px}
+}
+</style>
 </head>
 <body>
-<div id="app">
-  <aside id="panel" aria-label="Proyectos">
-    <header class="marca">
-      <a href="./" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
-      <p class="marca-sub">Visor territorial</p>
-    </header>
 
-    <div class="buscador">
-      <label for="buscar">Buscar</label>
-      <input id="buscar" type="search" placeholder="Nombre, lugar o tema" autocomplete="off">
+<header class="barra">
+  <div class="cont">
+    <a class="marca" href="#inicio"><strong>Apacheta</strong><span>Cartografía</span></a>
+    <nav aria-label="Principal">
+      <a href="#visor">Visor territorial</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#mapas">Mapas impresos</a>
+      <a href="#equipo">Quiénes somos</a>
+      <a class="btn" href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="inicio" class="portada oscuro">
+  <div class="cont">
+    <div class="portada-texto">
+      <p class="kicker">Consultoría territorial · Mendoza, Argentina</p>
+      <h1>Información territorial rigurosa para planificar, gestionar y decidir.</h1>
+      <p class="bajada">Análisis espaciales, socioeconómicos y socioambientales, y cartografía profesional para organismos públicos, organizaciones, empresas y productores.</p>
+      <div class="acciones">
+        <a class="btn btn-primario" href="#visor">Explorar el visor</a>
+        <a class="btn btn-borde" href="#contacto">Solicitar una propuesta</a>
+      </div>
     </div>
+    <ul class="lineas">
+      <li><b>01</b>Análisis territorial y espacial</li>
+      <li><b>02</b>Análisis socioeconómicos</li>
+      <li><b>03</b>Análisis socioambientales</li>
+      <li><b>04</b>Cartografía temática y de montaña</li>
+    </ul>
+  </div>
+</section>
 
-    <div id="filtros" class="filtros" role="group" aria-label="Filtrar por categoría"></div>
+<section id="visor" class="bloque">
+  <div class="cont">
+    <div class="encabezado">
+      <p class="kicker">Visor territorial</p>
+      <h2 class="titulo">Nuestros proyectos, sobre el territorio</h2>
+      <p class="bajada">Cada trabajo se carga como una capa del visor. Seleccioná un proyecto para ver su ubicación y su ficha.</p>
+    </div>
+    <div class="visor-marco">
+      <iframe src="visor.html" title="Visor territorial de proyectos de Apacheta Cartografía" loading="lazy" allowfullscreen></iframe>
+    </div>
+    <div class="visor-pie">
+      <span>Mapas base: CARTO, OpenTopoMap y Esri.</span>
+      <a href="visor.html" target="_blank" rel="noopener">Abrir el visor en pantalla completa ↗</a>
+    </div>
+  </div>
+</section>
 
-    <p id="contador" class="contador"></p>
-    <ul id="lista" class="lista"></ul>
-  </aside>
+<section id="servicios" class="bloque blanco">
+  <div class="cont">
+    <div class="encabezado">
+      <p class="kicker">Servicios</p>
+      <h2 class="titulo">Más que análisis espacial</h2>
+      <p class="bajada">Integramos la dimensión espacial con la económica, la social y la ambiental. Trabajamos por proyecto o como asistencia técnica permanente.</p>
+    </div>
+    <div class="grilla">
+      <article><h3>Análisis territorial y espacial</h3><p>Cambio de uso del suelo, teledetección, modelos de elevación, accesibilidad e indicadores territoriales con series temporales.</p></article>
+      <article><h3>Análisis socioeconómicos</h3><p>Estudios de circuitos productivos, mercado de suelo, actividad económica y condiciones de vida a partir de censos, encuestas y trabajo de campo.</p></article>
+      <article><h3>Análisis socioambientales</h3><p>Diagnósticos de conflictos y riesgos, uso del agua, expansión urbana sobre áreas agrícolas y de piedemonte, y líneas de base ambientales.</p></article>
+      <article><h3>Cartografía profesional</h3><p>Mapas temáticos para informes y publicaciones, y cartografía topográfica de montaña lista para imprimir.</p></article>
+      <article><h3>Visores y datos geográficos</h3><p>Visores web, bases de datos espaciales y automatización de procesos con PyQGIS, GDAL y PostGIS.</p></article>
+      <article><h3>Capacitación</h3><p>Cursos de SIG y QGIS a medida para equipos técnicos de organismos y organizaciones.</p></article>
+    </div>
+  </div>
+</section>
 
-  <main id="mapa-wrap">
-    <div id="mapa" aria-label="Mapa"></div>
-    <button id="toggle-panel" class="toggle-panel" type="button" aria-controls="panel" aria-expanded="false">Proyectos</button>
+<section id="mapas" class="bloque">
+  <div class="cont">
+    <div class="encabezado">
+      <p class="kicker">Mapas impresos</p>
+      <h2 class="titulo">Llevá el mapa en papel</h2>
+      <p class="bajada">Los mapas del visor también se pueden pedir impresos, para la mochila o para la pared.</p>
+    </div>
+    <article class="producto">
+      <div class="producto-img">
+        <div class="lamina">
+          <strong>Vn. Ojo del Salado</strong>
+          <em>[Imagen del mapa]</em>
+          <small><span>1:50.000</span><span>Apacheta</span></small>
+        </div>
+      </div>
+      <div class="producto-info">
+        <p class="kicker">Cartografía de montaña</p>
+        <h3>Volcán Ojo del Salado 1:50.000</h3>
+        <p>Mapa topográfico para andinistas con curvas de nivel, sombreado, refugios, campamentos, rutas normales por Chile y Argentina e información para el ascenso.</p>
+        <dl>
+          <div><dt>Formato</dt><dd>A3 vertical</dd></div>
+          <div><dt>Escala</dt><dd>1:50.000</dd></div>
+          <div><dt>Papel</dt><dd>[Tipo de papel]</dd></div>
+          <div><dt>Envío</dt><dd>[Zonas de envío]</dd></div>
+        </dl>
+        <div class="formatos" role="group" aria-label="Formato">
+          <button type="button" aria-pressed="true" data-formato="Impreso A3">Impreso A3</button>
+          <button type="button" aria-pressed="false" data-formato="Impreso plegado">Impreso plegado</button>
+          <button type="button" aria-pressed="false" data-formato="PDF digital">PDF digital</button>
+        </div>
+        <div class="compra">
+          <span class="precio">[Precio]</span>
+          <a id="comprar" class="btn btn-primario" href="#contacto">Comprar mapa</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 
-    <section id="ficha" class="ficha" hidden aria-live="polite">
-      <button id="ficha-cerrar" class="ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
-      <img id="ficha-img" class="ficha-img" alt="" hidden>
-      <p id="ficha-cat" class="ficha-cat"></p>
-      <h2 id="ficha-titulo"></h2>
-      <p id="ficha-meta" class="ficha-meta"></p>
-      <p id="ficha-desc" class="ficha-desc"></p>
-      <div id="ficha-leyenda" class="ficha-leyenda" hidden></div>
-      <div id="ficha-acciones" class="ficha-acciones"></div>
-    </section>
-  </main>
-</div>
+<section id="metodo" class="bloque oscuro">
+  <div class="cont">
+    <div class="encabezado">
+      <p class="kicker">Metodología</p>
+      <h2 class="titulo">Cómo trabajamos</h2>
+    </div>
+    <div class="pasos">
+      <div><b>01</b><h3>Relevamiento de la demanda</h3><p>Definimos la pregunta, el área de estudio y la información disponible.</p></div>
+      <div><b>02</b><h3>Propuesta técnica</h3><p>Alcance, metodología, productos, cronograma y presupuesto por escrito.</p></div>
+      <div><b>03</b><h3>Desarrollo</h3><p>Avances revisados en conjunto, con datos y procesos documentados.</p></div>
+      <div><b>04</b><h3>Entrega y transferencia</h3><p>Informe, cartografía y capas en formatos abiertos, con una instancia de presentación.</p></div>
+    </div>
+  </div>
+</section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="visor.js"></script>
+<section id="equipo" class="bloque">
+  <div class="cont">
+    <div class="equipo-intro">
+      <div class="encabezado" style="margin:0">
+        <p class="kicker">Quiénes somos</p>
+        <h2 class="titulo">Un equipo interdisciplinario</h2>
+      </div>
+      <p class="bajada">Somos una consultora joven compuesta por profesionales de diferentes disciplinas. Combinamos la geografía y los sistemas de información geográfica con otros campos del conocimiento para abordar cada territorio de manera integral.</p>
+    </div>
+    <div class="tarjetas">
+      <article><h3>Luis Verdugo</h3><p class="rol">Geografía · Sistemas de Información Geográfica</p><p>Doctorando en Geografía (UNCuyo) y docente de SIG. Experiencia en planificación territorial municipal, catastro e investigación en IADIZA-CONICET.</p></article>
+      <article><h3>[Nombre]</h3><p class="rol">[Profesión]</p><p>[Formación y experiencia.]</p></article>
+      <article><h3>[Nombre]</h3><p class="rol">[Profesión]</p><p>[Formación y experiencia.]</p></article>
+      <article><h3>[Nombre]</h3><p class="rol">[Profesión]</p><p>[Formación y experiencia.]</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="bloque blanco contacto">
+  <div class="cont">
+    <div class="contacto-datos">
+      <p class="kicker">Contacto</p>
+      <h2 class="titulo">Solicitá una propuesta</h2>
+      <p class="bajada">Contanos el alcance de tu proyecto y te respondemos con una propuesta técnica.</p>
+      <ul>
+        <li><a id="mail" href="mailto:[EMAIL]">[EMAIL]</a></li>
+        <li>[Teléfono]</li>
+        <li>Mendoza, Argentina</li>
+      </ul>
+    </div>
+    <form id="form-contacto">
+      <div class="fila">
+        <label>Nombre<input name="nombre" type="text" required></label>
+        <label>Institución u organización<input name="organizacion" type="text"></label>
+      </div>
+      <div class="fila">
+        <label>Email<input name="email" type="email" required></label>
+        <label>Tipo de consulta
+          <select name="tipo" id="tipo">
+            <option>Análisis territorial y espacial</option>
+            <option>Análisis socioeconómico</option>
+            <option>Análisis socioambiental</option>
+            <option>Cartografía</option>
+            <option>Compra de mapa impreso</option>
+            <option>Capacitación</option>
+            <option>Otro</option>
+          </select>
+        </label>
+      </div>
+      <label>Mensaje<textarea name="mensaje" id="mensaje" rows="5" required></textarea></label>
+      <button class="btn btn-primario" type="submit" style="align-self:flex-start">Enviar consulta</button>
+      <p class="aviso" id="aviso" hidden>Se abrió tu aplicación de correo con el mensaje listo para enviar.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="cont">
+    <span class="marca"><strong>Apacheta</strong><span>Cartografía</span></span>
+    <span>Consultoría territorial · Mendoza, Argentina · © 2026</span>
+  </div>
+</footer>
+
+<script>
+// Correo de destino del formulario (reemplazar)
+var CORREO = '[EMAIL]';
+
+// Selector de formato del mapa impreso
+var formato = 'Impreso A3';
+document.querySelectorAll('.formatos button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('.formatos button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', 'true');
+    formato = b.dataset.formato;
+  });
+});
+
+// "Comprar mapa" lleva al formulario con la consulta precargada
+document.getElementById('comprar').addEventListener('click', function () {
+  document.getElementById('tipo').value = 'Compra de mapa impreso';
+  document.getElementById('mensaje').value = 'Quiero comprar el mapa Volcán Ojo del Salado 1:50.000 — formato: ' + formato + '.';
+});
+
+// El formulario arma un correo listo para enviar
+document.getElementById('form-contacto').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = e.target;
+  var cuerpo = 'Nombre: ' + f.nombre.value + '\nOrganización: ' + f.organizacion.value +
+    '\nEmail: ' + f.email.value + '\n\n' + f.mensaje.value;
+  location.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent('Consulta: ' + f.tipo.value) +
+    '&body=' + encodeURIComponent(cuerpo);
+  document.getElementById('aviso').hidden = false;
+});
+</script>
 </body>
 </html>
