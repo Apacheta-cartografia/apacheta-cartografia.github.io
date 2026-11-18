@@ -39,20 +39,16 @@
   var mapa = L.map('mapa', { zoomControl: false, minZoom: 3 }).setView([-30.5, -69], 6);
 
   var bases = {
-    'Claro': L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19, subdomains: 'abcd',
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    'Satelital': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Imágenes &copy; Esri, Maxar, Earthstar Geographics'
     }),
     'Topográfico': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)'
-    }),
-    'Satelital': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-      attribution: 'Imágenes &copy; Esri, Maxar, Earthstar Geographics'
     })
   };
-  var baseActual = 'Claro';
+  var baseActual = 'Satelital';
   bases[baseActual].addTo(mapa);
   mapa.on('baselayerchange', function (e) { baseActual = e.name; });
   function usarBase(nombre) {
@@ -287,7 +283,6 @@
     subActual = {};
     subOcultas = {};
     if (actualizarHash && location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
-    if (x.props.base) usarBase(x.props.base);
     renderizar();
     mostrarFicha(x);
     cargarDetalle(x);
