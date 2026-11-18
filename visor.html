@@ -7,7 +7,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="visor.css?v=3">
+<link rel="stylesheet" href="visor.css?v=4">
+<style>
+/* Panel en el celular: cerrar y volver al mapa */
+.marca { position: relative; }
+.cerrar-panel, .ver-mapa { display: none; }
+@media (max-width: 760px) {
+  .marca { padding-right: 68px; }
+  .cerrar-panel {
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: 12px; right: 12px; width: 44px; height: 44px;
+    border: 1px solid #C9CBC4; border-radius: 6px; background: #FFFFFF;
+    font-size: 26px; line-height: 1; color: #16201D; cursor: pointer;
+  }
+  .ver-mapa {
+    display: block; margin: 0; padding: 12px 20px 16px; border-top: 1px solid #DCDDD8; background: #FFFFFF;
+  }
+  .ver-mapa button {
+    width: 100%; min-height: 48px; border: 0; border-radius: 6px; background: #16201D; color: #FFFFFF;
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  #panel.abierto ~ #mapa-wrap .toggle-panel { visibility: hidden; }
+}
+</style>
 </head>
 <body>
 <div id="app">
@@ -15,6 +37,7 @@
     <header class="marca">
       <a href="./" target="_top" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
       <p class="marca-sub">Visor territorial</p>
+      <button id="cerrar-panel" class="cerrar-panel" type="button" aria-label="Cerrar el panel de proyectos">×</button>
     </header>
 
     <div class="buscador">
@@ -26,6 +49,7 @@
 
     <p id="contador" class="contador"></p>
     <ul id="lista" class="lista"></ul>
+    <p class="ver-mapa"><button id="ver-mapa" type="button">Ver mapa</button></p>
   </aside>
 
   <main id="mapa-wrap">
@@ -46,6 +70,22 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="visor.js?v=3"></script>
+<script src="visor.js?v=4"></script>
+<script>
+(function () {
+  var panel = document.getElementById('panel');
+  var toggle = document.getElementById('toggle-panel');
+  function cerrarPanel() {
+    if (!panel.classList.contains('abierto')) return;
+    panel.classList.remove('abierto');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.focus();
+  }
+  document.getElementById('cerrar-panel').addEventListener('click', cerrarPanel);
+  document.getElementById('ver-mapa').addEventListener('click', cerrarPanel);
+  document.getElementById('mapa').addEventListener('click', cerrarPanel);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarPanel(); });
+})();
+</script>
 </body>
 </html>
