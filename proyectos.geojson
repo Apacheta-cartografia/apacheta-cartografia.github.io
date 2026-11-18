@@ -1,0 +1,8 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {"type": "Feature", "properties": {"id": "ojo-del-salado", "titulo": "Volcán Ojo del Salado 1:50.000", "categoria": "Cartografía", "lugar": "Catamarca (AR) · Atacama (CL)", "anio": 2026, "descripcion": "Mapa topográfico para andinistas: DEM Copernicus GLO-30, sombreado, curvas cada 25 m, refugios, campamentos y rutas normales por Chile y Argentina.", "etiquetas": ["montaña", "andinismo", "topografía", "Puna"], "capa": "ojo-del-salado.geojson", "zoom": 12, "imagen": ""}, "geometry": {"type": "Point", "coordinates": [-68.54139, -27.10972]}},
+  {"type": "Feature", "properties": {"id": "cinturon-verde", "titulo": "Cinturón Verde del Área Metropolitana", "categoria": "Análisis socioeconómico", "lugar": "Gran Mendoza", "anio": "2000–2020", "descripcion": "Transformaciones espaciales y circuitos económicos de la producción hortícola en el Cinturón Verde del Área Metropolitana de Mendoza.", "etiquetas": ["horticultura", "periurbano", "agrícola", "CVAMM"], "zoom": 10, "ubicacion": "aproximada", "imagen": ""}, "geometry": {"type": "Point", "coordinates": [-68.72, -32.86]}},
+  {"type": "Feature", "properties": {"id": "oasis-norte", "titulo": "Cambio de uso del suelo en el oasis norte", "categoria": "Análisis territorial", "lugar": "Oasis norte de Mendoza", "anio": "", "descripcion": "Proyecto SIIp (UNCuyo) sobre las transformaciones del uso del suelo en el oasis norte de Mendoza.", "etiquetas": ["uso del suelo", "teledetección", "SIIp"], "zoom": 9, "ubicacion": "aproximada", "imagen": ""}, "geometry": {"type": "Point", "coordinates": [-68.55, -32.8]}}
+ ]
+}

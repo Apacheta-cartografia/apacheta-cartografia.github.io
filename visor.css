@@ -1,0 +1,140 @@
+/* Visor territorial — Apacheta Cartografía */
+:root {
+  --tinta: #16201D;
+  --texto: #3B4440;
+  --gris: #4A524E;
+  --linea: #DCDDD8;
+  --fondo: #F6F6F3;
+  --acento: #9A3F1C;
+  --panel: 340px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: Montserrat, system-ui, sans-serif;
+  color: var(--tinta);
+  background: var(--fondo);
+}
+h2, .marca-nombre strong { font-family: Inter, sans-serif; }
+
+#app { display: flex; height: 100vh; height: 100dvh; }
+
+/* ---------- Panel lateral ---------- */
+#panel {
+  width: var(--panel);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-right: 1px solid var(--linea);
+  overflow: hidden;
+  z-index: 1001;
+}
+.marca { padding: 20px 20px 16px; border-bottom: 1px solid var(--linea); }
+.marca-nombre { color: var(--tinta); text-decoration: none; font-size: 20px; }
+.marca-nombre strong { font-weight: 700; letter-spacing: -0.01em; }
+.marca-nombre span { color: var(--gris); }
+.marca-sub {
+  margin: 6px 0 0; font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; font-weight: 600; color: var(--acento);
+}
+
+.buscador { padding: 16px 20px 8px; display: flex; flex-direction: column; gap: 6px; }
+.buscador label { font-size: 12px; font-weight: 600; color: var(--gris); }
+.buscador input {
+  font: inherit; font-size: 14px; padding: 10px 12px;
+  border: 1px solid #A9ABA3; border-radius: 6px; background: var(--fondo); color: var(--tinta);
+}
+.buscador input:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 20px 12px; }
+.filtro {
+  font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 34px; padding: 6px 10px; border-radius: 999px;
+  border: 1px solid #A9ABA3; background: #FFFFFF; color: var(--tinta);
+}
+.filtro[aria-pressed="false"] { opacity: 0.55; }
+.filtro .punto { width: 10px; height: 10px; border-radius: 50%; }
+
+.contador { margin: 0; padding: 4px 20px 8px; font-size: 12px; color: var(--gris); }
+
+.lista { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; border-top: 1px solid var(--linea); }
+.lista li { border-bottom: 1px solid var(--linea); }
+.item {
+  all: unset; box-sizing: border-box; cursor: pointer; width: 100%;
+  display: flex; gap: 12px; align-items: flex-start; padding: 14px 20px;
+}
+.item:hover { background: #F7F5F1; }
+.item:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
+.item[aria-current="true"] { background: #F1EEE8; box-shadow: inset 3px 0 0 var(--acento); }
+.item .punto { width: 12px; height: 12px; border-radius: 50%; margin-top: 4px; flex: none; }
+.item-cat { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; color: var(--gris); }
+.item-titulo { display: block; font-family: Inter, sans-serif; font-weight: 600; font-size: 15px; margin: 2px 0; }
+.item-lugar { display: block; font-size: 13px; color: var(--gris); }
+.vacio { padding: 20px; font-size: 14px; color: var(--gris); }
+
+/* ---------- Mapa ---------- */
+#mapa-wrap { position: relative; flex: 1; min-width: 0; }
+#mapa { position: absolute; inset: 0; background: #E9EBE6; }
+.leaflet-container { font-family: Montserrat, system-ui, sans-serif; }
+
+.coords {
+  background: rgba(255,255,255,0.9); padding: 4px 8px; border-radius: 4px;
+  font-size: 11px; color: var(--texto); font-variant-numeric: tabular-nums;
+}
+
+.toggle-panel {
+  display: none; position: absolute; top: 12px; left: 12px; z-index: 1000;
+  font: inherit; font-weight: 600; font-size: 14px; min-height: 44px; padding: 10px 16px;
+  border: 1px solid #C9CBC4; border-radius: 6px; background: #FFFFFF; color: var(--tinta); cursor: pointer;
+}
+
+/* ---------- Ficha ---------- */
+.ficha {
+  position: absolute; left: 16px; bottom: 32px; z-index: 1000;
+  width: min(380px, calc(100% - 32px)); max-height: calc(100% - 64px); overflow-y: auto;
+  background: #FFFFFF; border: 1px solid #C9CBC4; border-radius: 8px;
+  padding: 20px; box-shadow: 0 8px 28px rgba(22,32,29,0.16);
+}
+.ficha h2 { margin: 0 32px 6px 0; font-size: 19px; line-height: 1.25; }
+.ficha-cerrar {
+  position: absolute; top: 6px; right: 6px; width: 40px; height: 40px;
+  border: 0; background: transparent; font-size: 24px; color: var(--gris); cursor: pointer;
+}
+.ficha-img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; margin-bottom: 12px; }
+.ficha-cat { margin: 0 0 6px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--acento); }
+.ficha-meta { margin: 0 0 10px; font-size: 13px; color: var(--gris); }
+.ficha-desc { margin: 0 0 14px; font-size: 14px; line-height: 1.55; color: var(--texto); }
+.ficha-leyenda { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 14px; font-size: 12px; color: var(--texto); }
+.ficha-leyenda span { display: inline-flex; align-items: center; gap: 6px; }
+.ficha-leyenda i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 0 1px #16201D55; }
+.ficha-acciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.boton {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 9px 16px;
+  border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--tinta); color: var(--tinta);
+}
+.boton.primario { background: var(--acento); border-color: var(--acento); color: #FFFFFF; }
+
+/* Etiquetas de la capa de detalle */
+.etiqueta {
+  background: rgba(255,255,255,0.92); border: 0; box-shadow: none;
+  font-size: 11px; font-weight: 600; color: var(--tinta); padding: 2px 6px;
+}
+.etiqueta::before { display: none; }
+.leaflet-popup-content { font-family: Montserrat, system-ui, sans-serif; font-size: 13px; }
+.leaflet-popup-content strong { font-family: Inter, sans-serif; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+  #panel {
+    position: absolute; top: 0; bottom: 0; left: 0; width: min(88vw, 340px);
+    transform: translateX(-100%); transition: transform 0.2s ease;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  }
+  #panel.abierto { transform: none; }
+  .toggle-panel { display: block; }
+  .ficha { left: 8px; right: 8px; bottom: 24px; width: auto; }
+}
