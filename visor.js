@@ -89,6 +89,8 @@
   var cacheCapas = {};
   var subActual = {};      // id de subcapa -> { grupo: L.featureGroup, cuenta: n }
   var subOcultas = {};     // id de subcapa -> true si está apagada
+  var indice = {};         // nombre normalizado -> { capa, sub } del proyecto abierto
+  var pendiente = null;    // { id, nombre } a mostrar cuando cargue la capa
 
   var $ = function (id) { return document.getElementById(id); };
   var elLista = $('lista'), elFiltros = $('filtros'), elBuscar = $('buscar'), elContador = $('contador');
@@ -339,6 +341,7 @@
   // ---------- Capa de detalle, separada en subcapas ----------
   function cargarDetalle(x) {
     capaDetalle.clearLayers();
+    indice = {};
     var url = x.props.capa;
     if (!url) {
       mapa.flyTo(x.layer.getBounds().getCenter(), x.props.zoom || 10, { duration: 0.8 });
@@ -372,6 +375,7 @@
               }
             }
             l.bindPopup(popupDetalle(p, s));
+            if (p.nombre) indice[normalizar(p.nombre)] = { capa: l, sub: s.id };
           }
         });
         grupos[s.id].grupo.addLayer(capa);
@@ -380,6 +384,7 @@
       subActual = grupos;
       Object.keys(grupos).forEach(function (k) { capaDetalle.addLayer(grupos[k].grupo); });
       renderizar();
+      if (pendiente && pendiente.id === x.id) { var pe = pendiente; pendiente = null; if (irAElemento(pe.nombre)) return; }
       var limites = L.featureGroup(Object.keys(grupos).map(function (k) { return grupos[k].grupo; })).getBounds();
       if (limites.isValid()) mapa.flyToBounds(limites.pad(0.25), { duration: 0.8, maxZoom: x.props.zoom || 14 });
     }).catch(function () {
@@ -397,6 +402,37 @@
     if (p.nota) { var n = document.createElement('p'); n.style.margin = '6px 0 0'; n.textContent = p.nota; d.appendChild(n); }
     return d;
   }
+
+  // ---------- Ir a un elemento de la capa de detalle ----------
+  function irAElemento(nombre) {
+    var q = normalizar(nombre);
+    var e = indice[q];
+    if (!e) {
+      var k = Object.keys(indice).filter(function (n) { return n.indexOf(q) >= 0 || q.indexOf(n) >= 0; })[0];
+      e = k ? indice[k] : null;
+    }
+    if (!e) return false;
+    if (subOcultas[e.sub] && subActual[e.sub]) {
+      subOcultas[e.sub] = false;
+      capaDetalle.addLayer(subActual[e.sub].grupo);
+      renderizar();
+    }
+    if (e.capa.getLatLng) mapa.flyTo(e.capa.getLatLng(), 13, { duration: 0.8 });
+    else mapa.flyToBounds(e.capa.getBounds().pad(0.2), { duration: 0.8 });
+    setTimeout(function () { e.capa.openPopup(); }, 900);
+    return true;
+  }
+
+  // API mínima para el asistente
+  window.ApachetaVisor = {
+    seleccionar: function (id) { if (id !== seleccionado) seleccionar(id, true); },
+    irA: function (id, nombre) {
+      if (seleccionado === id && Object.keys(indice).length) return irAElemento(nombre);
+      pendiente = { id: id, nombre: nombre };
+      seleccionar(id, true);
+      return true;
+    }
+  };
 
   // ---------- Panel en el celular ----------
   elToggle.addEventListener('click', function () {

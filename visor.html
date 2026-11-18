@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="visor.css?v=4">
+<link rel="stylesheet" href="visor.css?v=5">
+<link rel="stylesheet" href="asistente.css?v=5">
 <style>
 /* Panel en el celular: cerrar y volver al mapa */
 .marca { position: relative; }
@@ -30,6 +31,10 @@
   #panel.abierto ~ #mapa-wrap .toggle-panel { visibility: hidden; }
 }
 </style>
+<script>
+  // Dirección del Worker del asistente con IA. Vacío = modo local (sin IA, sin costo).
+  window.APACHETA_ASISTENTE_URL = '';
+</script>
 </head>
 <body>
 <div id="app">
@@ -66,11 +71,38 @@
       <div id="ficha-leyenda" class="ficha-leyenda" hidden></div>
       <div id="ficha-acciones" class="ficha-acciones"></div>
     </section>
+
+    <button id="asistente-abrir" class="asistente-abrir" type="button" aria-controls="asistente" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Preguntar
+    </button>
+
+    <section id="asistente" class="asistente" hidden aria-label="Asistente del visor">
+      <div class="asistente-cab">
+        <h2>Asistente Apacheta</h2>
+        <span id="asistente-modo" class="asistente-modo">Modo local</span>
+        <button id="asistente-cerrar" class="asistente-cerrar" type="button" aria-label="Cerrar el asistente">×</button>
+      </div>
+      <div id="asistente-mensajes" class="asistente-mensajes" aria-live="polite"></div>
+      <div id="asistente-sugerencias" class="asistente-sugerencias">
+        <button type="button">¿Dónde hay agua en el Ojo del Salado?</button>
+        <button type="button">Refugios del Aconcagua</button>
+        <button type="button">¿Qué altura tiene el Maipo?</button>
+        <button type="button">¿Cómo llego al Valle de las Lágrimas?</button>
+      </div>
+      <form id="asistente-form" class="asistente-form">
+        <label for="asistente-input" style="position:absolute;left:-9999px">Tu pregunta</label>
+        <input id="asistente-input" type="text" placeholder="Preguntá sobre rutas, refugios, agua…" autocomplete="off" maxlength="300">
+        <button type="submit">Enviar</button>
+      </form>
+      <p class="asistente-nota">Responde solo con los datos del visor. Prototipo.</p>
+    </section>
   </main>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="visor.js?v=4"></script>
+<script src="visor.js?v=5"></script>
+<script src="asistente.js?v=5"></script>
 <script>
 (function () {
   var panel = document.getElementById('panel');
