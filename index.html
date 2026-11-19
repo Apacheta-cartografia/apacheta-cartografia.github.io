@@ -62,6 +62,15 @@ nav a.btn{padding:10px 20px;min-height:40px;background:var(--tinta);color:#FFFFF
 .grilla h3{margin:0;font-size:20px}
 .grilla p{margin:0;font-size:15px;line-height:1.6;color:var(--texto)}
 
+/* Armá tu mapa */
+.arma .cont{display:flex;flex-wrap:wrap;gap:40px 56px;align-items:flex-start}
+.arma-texto{flex:1 1 400px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.arma .bajada{color:var(--suave)}
+.arma-col{flex:1 1 240px;min-width:0;border-top:1px solid var(--claro);padding-top:18px}
+.arma-col h3{margin:0 0 10px;font-size:18px}
+.arma-col ul{margin:0;padding-left:18px;color:var(--suave);font-size:15px;line-height:1.7}
+.arma-pie{margin:0;font-size:14px;color:var(--suave)}
+
 /* Mapas impresos */
 .producto{display:flex;flex-wrap:wrap;background:#FFFFFF;border:1px solid #C9CBC4;border-radius:10px;overflow:hidden}
 .producto-img{flex:1 1 360px;min-height:420px;background:#E9EBE6;display:flex;align-items:center;justify-content:center;padding:32px}
@@ -129,6 +138,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
     <nav aria-label="Principal">
       <a href="#visor">Visor territorial</a>
       <a href="#servicios">Servicios</a>
+      <a href="#arma-tu-mapa">Armá tu mapa</a>
       <a href="#mapas">Mapas impresos</a>
       <a href="#equipo">Quiénes somos</a>
       <a class="btn" href="#contacto">Contacto</a>
@@ -144,7 +154,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
       <h1>Información territorial rigurosa para planificar, gestionar y decidir.</h1>
       <p class="bajada">Análisis espaciales, socioeconómicos y socioambientales, y cartografía profesional para organismos públicos, organizaciones, empresas y productores.</p>
       <div class="acciones">
-        <a class="btn btn-primario" href="#visor">Explorar el visor</a>
+        <a class="btn btn-primario" href="visor.html" target="_blank" rel="noopener">Explorar el visor ↗</a>
         <a class="btn btn-borde" href="#contacto">Solicitar una propuesta</a>
       </div>
     </div>
@@ -188,6 +198,41 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
       <article><h3>Cartografía profesional</h3><p>Mapas temáticos para informes y publicaciones, y cartografía topográfica de montaña lista para imprimir.</p></article>
       <article><h3>Visores y datos geográficos</h3><p>Visores web, bases de datos espaciales y automatización de procesos con PyQGIS, GDAL y PostGIS.</p></article>
       <article><h3>Capacitación</h3><p>Cursos de SIG y QGIS a medida para equipos técnicos de organismos y organizaciones.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="arma-tu-mapa" class="bloque oscuro arma">
+  <div class="cont">
+    <div class="arma-texto">
+      <p class="kicker">Servicio nuevo · en desarrollo</p>
+      <h2 class="titulo">Armá tu propio mapa</h2>
+      <p class="bajada">Elegí cualquier lugar, decidí qué querés ver y descargalo en PDF con el diseño de Apacheta: norte, escala gráfica, referencias y créditos ya resueltos.</p>
+      <div class="acciones">
+        <a class="btn btn-primario" href="mapa.html" target="_blank" rel="noopener">Armar mi mapa ↗</a>
+      </div>
+      <p class="arma-pie">¿Necesitás algo más elaborado? Lo hacemos a medida.</p>
+    </div>
+    <div class="arma-col">
+      <h3>Vos elegís</h3>
+      <ul>
+        <li>El lugar, buscándolo o moviendo el mapa</li>
+        <li>Título y subtítulo</li>
+        <li>Fondo satelital o topográfico</li>
+        <li>Caminos, senderos, ríos, lagunas, cumbres, refugios, localidades y puntos de interés</li>
+        <li>Tus propios puntos, con nombre</li>
+        <li>Hoja A4 o A3, vertical u horizontal</li>
+      </ul>
+    </div>
+    <div class="arma-col">
+      <h3>Nosotros ponemos</h3>
+      <ul>
+        <li>Norte y escala gráfica con diseño propio</li>
+        <li>Referencias automáticas</li>
+        <li>Diagramación y marca Apacheta</li>
+        <li>Créditos de las fuentes de datos</li>
+        <li>PDF listo para imprimir o llevar en el celular</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -289,6 +334,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
             <option>Análisis socioeconómico</option>
             <option>Análisis socioambiental</option>
             <option>Cartografía</option>
+            <option>Mapa a medida</option>
             <option>Compra de mapa impreso</option>
             <option>Capacitación</option>
             <option>Otro</option>
