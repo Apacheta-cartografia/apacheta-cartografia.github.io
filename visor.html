@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="visor.css?v=5">
-<link rel="stylesheet" href="asistente.css?v=5">
+<link rel="stylesheet" href="visor.css?v=6">
+<link rel="stylesheet" href="asistente.css?v=6">
 <style>
 /* Panel en el celular: cerrar y volver al mapa */
 .marca { position: relative; }
@@ -33,7 +33,7 @@
 </style>
 <script>
   // Dirección del Worker del asistente con IA. Vacío = modo local (sin IA, sin costo).
-  window.APACHETA_ASISTENTE_URL = '';
+  window.APACHETA_ASISTENTE_URL = 'https://apacheta-asistente.luisverdug8.workers.dev';
 </script>
 </head>
 <body>
@@ -91,7 +91,7 @@
         <button type="button">¿Cómo llego al Valle de las Lágrimas?</button>
       </div>
       <form id="asistente-form" class="asistente-form">
-        <label for="asistente-input" style="position:absolute;left:-9999px">Tu pregunta</label>
+        <label for="asistente-input" class="sr-only" style="position:absolute;left:-9999px">Tu pregunta</label>
         <input id="asistente-input" type="text" placeholder="Preguntá sobre rutas, refugios, agua…" autocomplete="off" maxlength="300">
         <button type="submit">Enviar</button>
       </form>
@@ -101,8 +101,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="visor.js?v=5"></script>
-<script src="asistente.js?v=5"></script>
+<script src="visor.js?v=6"></script>
+<script src="asistente.js?v=6"></script>
 <script>
 (function () {
   var panel = document.getElementById('panel');
