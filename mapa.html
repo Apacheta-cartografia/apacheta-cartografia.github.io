@@ -192,6 +192,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
   var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 } };
   var DPI = 200, PPM = DPI / 25.4;          // píxeles por milímetro de la hoja
   var ZOOM_MIN_DATOS = 11;
+  var SERVIDORES = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
 
   /* ---------- Estado ---------- */
   var estado = { fondo: 'satelital', datos: null, claveDatos: '', puntos: [], agregando: false, pdf: null };
@@ -325,15 +326,22 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
     if (!forzar && clave === estado.claveDatos) return Promise.resolve();
     if (pedido) pedido.abort();
     pedido = new AbortController();
-    $('estado-capas').textContent = 'Cargando datos de OpenStreetMap…';
-    return fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST', signal: pedido.signal,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'data=' + encodeURIComponent(consulta(b, capas, z))
-    }).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    }).then(function (json) {
+    $('estado-capas').textContent = 'Cargando datos de OpenStreetMap… (puede tardar unos segundos)';
+    var cuerpo = 'data=' + encodeURIComponent(consulta(b, capas, z)), senal = pedido.signal;
+    function pedir(i) {
+      var ctl = new AbortController(), corte = setTimeout(function () { ctl.abort(); }, 25000);
+      var cancelar = function () { ctl.abort(); };
+      senal.addEventListener('abort', cancelar);
+      return fetch(SERVIDORES[i], { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: cuerpo })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .catch(function (err) {
+          if (senal.aborted) { var e = new Error('cancelado'); e.name = 'AbortError'; throw e; }
+          if (i + 1 < SERVIDORES.length) { $('estado-capas').textContent = 'El servidor tarda; probando otro…'; return pedir(i + 1); }
+          throw err;
+        })
+        .finally(function () { clearTimeout(corte); senal.removeEventListener('abort', cancelar); });
+    }
+    return pedir(0).then(function (json) {
       estado.datos = procesar(json); estado.claveDatos = clave;
       var n = 0; Object.keys(estado.datos).forEach(function (k) { n += estado.datos[k].length; });
       $('estado-capas').textContent = n ? n + ' elementos cargados de OpenStreetMap.' : 'No hay elementos de esas capas en esta zona.';
@@ -686,6 +694,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 
   $('generar').addEventListener('click', function () {
     var btn = $('generar'); btn.disabled = true;
+    clearTimeout(temporizador);
     $('estado-gen').textContent = 'Preparando los datos…';
     var fuentes = Promise.all(['700 40px Inter', '600 40px Inter', '500 40px Montserrat', '600 40px Montserrat', '400 40px Montserrat']
       .map(function (f) { return document.fonts.load(f); }));
