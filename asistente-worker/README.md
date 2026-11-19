@@ -1,35 +1,17 @@
 # Asistente con IA del visor — puesta en marcha
 
 El asistente del visor funciona de entrada en **modo local**: busca por palabras clave en los datos del visor, sin IA y sin costo.
-Para que responda con IA (Claude) hace falta este Worker, que guarda la clave de la API fuera del sitio público.
+Con este Worker responde con IA usando **Workers AI de Cloudflare**, dentro del plan gratuito: sin tarjeta y sin claves externas.
 
-## 1. Clave de la API de Anthropic
-1. Crear una cuenta en https://console.anthropic.com
-2. Cargar crédito y fijar un **límite de gasto mensual** bajo.
-3. Crear una API key y guardarla (no se publica nunca en el repositorio).
+## Puesta en marcha
+1. Cuenta gratuita en https://dash.cloudflare.com
+2. Crear un Worker (por ejemplo `apacheta-asistente`) con el contenido de `worker.js`.
+3. Agregarle una vinculación (binding) de **Workers AI** con el nombre `AI`.
+4. Publicarlo en `workers.dev` y copiar su dirección.
+5. En `visor.html`, completar `window.APACHETA_ASISTENTE_URL` con esa dirección.
 
-## 2. Worker en Cloudflare
-1. Crear una cuenta gratuita en https://dash.cloudflare.com
-2. Ir a **Workers & Pages** y crear un Worker nuevo, por ejemplo `apacheta-asistente`.
-3. Editar el código, pegar el contenido de `worker.js` y publicar (**Deploy**).
-4. En la configuración del Worker, agregar un **secreto** llamado `ANTHROPIC_API_KEY` con la clave del paso 1.
-5. Copiar la dirección del Worker, del tipo `https://apacheta-asistente.<cuenta>.workers.dev`.
-
-## 3. Conectar el visor
-En `visor.html`, completar:
-
-```html
-<script>
-  window.APACHETA_ASISTENTE_URL = 'https://apacheta-asistente.<cuenta>.workers.dev';
-</script>
-```
-
-El asistente pasa a mostrar «Con IA». Si el Worker falla, responde solo en modo local.
-
-## Qué controla el Worker
-- Solo acepta pedidos desde `https://apacheta-cartografia.github.io`.
-- Límite de 30 preguntas por IP y por día (ajustable en `MAX_PREGUNTAS_POR_IP_POR_DIA`).
-- Le pasa a Claude únicamente los datos publicados en el visor y le prohíbe inventar datos de montaña.
-- Modelo: `claude-haiku-5-5` (el más económico; se cambia en `MODELO`).
-
-Cada vez que se suma un proyecto o una capa al sitio, el asistente la conoce sola en menos de una hora.
+## Límites
+- Workers AI incluye 10.000 Neurons por día gratis; en el plan gratuito, al pasarse, los pedidos fallan (no se cobra) y el visor responde en modo local.
+- El Worker acepta pedidos solo desde `https://apacheta-cartografia.github.io` y limita a 30 preguntas por IP y por día.
+- Modelo: `@cf/meta/llama-3.3-70b-instruct-fp8-fast`. Para estirar la cuota diaria, cambiar `MODELO` por `@cf/meta/llama-3.1-8b-instruct`.
+- El modelo recibe solo los datos publicados en el visor y tiene prohibido inventar datos de montaña.
