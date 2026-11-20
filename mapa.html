@@ -78,7 +78,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 #mapa.dibujando{cursor:crosshair}
 .ma{position:absolute;z-index:450;pointer-events:none;font-family:Inter,sans-serif;font-weight:700;white-space:nowrap;color:#fff}
 .ma-esquina{letter-spacing:.12em;opacity:.75;text-shadow:0 0 .25em rgba(22,32,29,.7)}
-.ma-centro{left:50%;top:50%;transform:translate(-50%,-50%) rotate(-20deg);opacity:.16;text-shadow:0 0 .1em rgba(22,32,29,.9)}
+.ma-centro{left:24%;top:74%;transform:translate(-50%,-50%) rotate(-20deg);opacity:.1;text-shadow:0 0 .1em rgba(22,32,29,.9)}
 .rot{font-family:Inter,sans-serif;font-weight:700;font-size:2.6em;color:var(--acento);letter-spacing:.06em;line-height:1}
 #h-ley .item{position:absolute;display:flex;align-items:center;white-space:nowrap}
 #h-ley .item img{width:7.6em;height:5em;margin-right:1.9em}
@@ -365,7 +365,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
     pos('h-regla', h.m, h.m + 18.25, h.W - 2 * h.m);
     var mp = $('mapa'); mp.style.left = px(h.mapa.x); mp.style.top = px(h.mapa.y); mp.style.width = px(h.mapa.w); mp.style.height = px(h.mapa.h);
     mp.style.outlineWidth = px(.4);
-    $('ma-centro').style.fontSize = px(Math.min(h.mapa.w, h.mapa.h) * .085);
+    $('ma-centro').style.fontSize = px(Math.min(h.mapa.w, h.mapa.h) * .045);
     var me = $('ma-esquina'); me.style.fontSize = px(3); me.style.right = px(4); me.style.bottom = px(3.4);
     pos('h-rot-ley', h.m, h.py + .4);
     pos('h-ley', h.m, h.py + 4.4, LEY.ancho(h) + 30, 22);
@@ -934,10 +934,10 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 
       // Marcas de agua dentro del mapa (no se pueden recortar sin perder parte del mapa)
       cx.save();
-      cx.translate(fx + fw / 2, fy + fh / 2); cx.rotate(-20 * Math.PI / 180);
+      cx.translate(fx + fw * .24, fy + fh * .74); cx.rotate(-20 * Math.PI / 180);
       cx.textAlign = 'center'; cx.textBaseline = 'middle';
-      cx.globalAlpha = .16;
-      texto(cx, 'Apacheta Cartografía', 0, 0, '700 ' + mm(Math.min(h.mapa.w, h.mapa.h) * .085) + 'px Inter', '#fff', { color: 'rgba(22,32,29,.9)', ancho: mm(.35) });
+      cx.globalAlpha = .1;
+      texto(cx, 'Apacheta Cartografía', 0, 0, '700 ' + mm(Math.min(h.mapa.w, h.mapa.h) * .045) + 'px Inter', '#fff', { color: 'rgba(22,32,29,.9)', ancho: mm(.25) });
       cx.restore();
       cx.save();
       cx.textAlign = 'right'; cx.textBaseline = 'alphabetic'; cx.globalAlpha = .75;
