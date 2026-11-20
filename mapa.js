@@ -520,8 +520,9 @@
       $('estado-capas').textContent = 'Acercá el mapa para cargar las capas.';
       return Promise.resolve();
     }
-    var zt = Math.min(14, Math.floor(z) + 1), lista = teselasVista(zt);
-    while (lista.length > 64 && zt > ZOOM_MIN_DATOS) { zt--; lista = teselasVista(zt); }
+    // Nivel 14 trae todo el detalle (senderos incluidos); si la zona es muy grande se baja de nivel
+    var zt = 14, lista = teselasVista(zt);
+    while (lista.length > 100 && zt > ZOOM_MIN_DATOS) { zt--; lista = teselasVista(zt); }
     var clave = capas.join(',') + '|' + z + '|' + lista.map(function (t) { return t.join('/'); }).join(',');
     if (!forzar && clave === estado.claveDatos) return Promise.resolve();
     var mio = ++turno;
