@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="visor.css?v=7">
 <link rel="stylesheet" href="asistente.css?v=7">
 <style>
+/* Colaboración en Cafecito (sin restricciones) */
+.cafecito { margin: 0; padding: 12px 20px 14px; border-top: 1px solid #DCDDD8; background: #FBF4EF; font-size: 12.5px; line-height: 1.5; color: #3B4440; }
+.cafecito a { color: #9A3F1C; font-weight: 600; }
 /* Panel en el celular: cerrar y volver al mapa */
 .marca { position: relative; }
 .cerrar-panel, .ver-mapa { display: none; }
@@ -40,7 +43,7 @@
 <div id="app">
   <aside id="panel" aria-label="Proyectos">
     <header class="marca">
-      <a href="./" target="_top" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
+      <a href="./" target="_top" class="marca-nombre" title="Volver a la página de Apacheta"><strong>Apacheta</strong> <span>Cartografía</span></a>
       <p class="marca-sub">Visor territorial</p>
       <button id="cerrar-panel" class="cerrar-panel" type="button" aria-label="Cerrar el panel de proyectos">×</button>
     </header>
@@ -54,6 +57,7 @@
 
     <p id="contador" class="contador"></p>
     <ul id="lista" class="lista"></ul>
+    <p class="cafecito">Este visor es gratuito y se sostiene con colaboraciones. Si te sirvió, <a href="https://cafecito.app/apachetacartografia" target="_blank" rel="noopener">invitanos un cafecito ↗</a></p>
     <p class="ver-mapa"><button id="ver-mapa" type="button">Ver mapa</button></p>
   </aside>
 
