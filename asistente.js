@@ -140,9 +140,7 @@
     'ojo-del-salado': ['ojo del salado', 'ojos del salado', 'salado', 'tejos', 'atacama'],
     'aconcagua': ['aconcagua', 'horcones', 'plaza de mulas', 'confluencia'],
     'valle-de-las-lagrimas': ['lagrimas', 'sosneado', 'avion', 'uruguayos', 'seler', '571'],
-    'laguna-del-diamante': ['diamante', 'maipo'],
-    'cinturon-verde': ['cinturon verde', 'horticola', 'cvamm'],
-    'oasis-norte': ['oasis norte', 'uso del suelo', 'siip']
+    'laguna-del-diamante': ['diamante', 'maipo']
   };
 
   function describir(e) {
