@@ -3,7 +3,7 @@
    quitar <script src="colabora.js"> de mapa.html. */
 (function () {
   var CAFECITO_URL = 'https://cafecito.app/apachetacartografia';
-  var GRATIS = 2, POR_COLABORACION = 5, CLAVE = 'apacheta-mapa-descargas', CLAVE_COLABORO = 'apacheta-mapa-colaboro';
+  var GRATIS = 1, POR_COLABORACION = 3, CLAVE = 'apacheta-mapa-descargas', CLAVE_COLABORO = 'apacheta-mapa-colaboro';
   var memoria = null;
   function $(id) { return document.getElementById(id); }
   function disponibles() {
@@ -26,7 +26,8 @@
       return orig.apply(this, arguments);
     };
   });
-  $('colabora').querySelector('p').textContent = 'Ya usaste tus descargas gratis. Esta herramienta es libre y la mantenemos a pulmón: con una colaboración en Cafecito, del monto que quieras, habilitás 5 descargas más y tus mapas salen sin marca de agua.';
+  $('colabora').querySelector('p').textContent = 'Ya usaste tu descarga gratis. Esta herramienta es libre y la mantenemos a pulmón: con una colaboración en Cafecito habilitás 3 descargas más y tus mapas salen sin marca de agua.';
+  $('ya-colabore').textContent = 'Ya colaboré: habilitar 3 descargas';
 
   function mostrar() {
     var n = disponibles();
