@@ -151,7 +151,7 @@
       var DOE = window.DeviceOrientationEvent;
       if (!DOE) return;
       if (typeof DOE.requestPermission === 'function') {
-        DOE.requestPermission().then(function (r) { if (r === 'granted') escuchar(); }).catch(function () {});
+        DOE.requestPermission().then(function () { escuchar(); }).catch(function () {});
       } else escuchar();
     }
     function escuchar() {
@@ -159,8 +159,9 @@
       if ('ondeviceorientationabsolute' in window) window.addEventListener('deviceorientationabsolute', alGirar, true);
       else window.addEventListener('deviceorientation', alGirar, true);
     }
-    // En Android no hace falta permiso: escuchamos desde el inicio para mostrar la brújula
-    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== 'function') escuchar();
+    // Escuchamos desde el inicio: donde no hace falta permiso (Android), la brújula aparece sola;
+    // en iPhone los datos llegan recién después del toque en «Mi ubicación».
+    if (window.DeviceOrientationEvent) escuchar();
 
     var suave = null;
     function alGirar(e) {
