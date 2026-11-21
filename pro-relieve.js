@@ -99,7 +99,7 @@
       var pend = Math.atan(Math.sqrt(dzdx * dzdx + dzdy * dzdy)), asp = Math.atan2(dzdy, -dzdx);
       var hs = Math.cos(alt) * Math.cos(pend) + Math.sin(alt) * Math.sin(pend) * Math.cos(az - Math.PI / 2 + asp);
       hs = Math.max(0, Math.min(1, hs));
-      var v = Math.round(255 - (1 - hs) * 150), k = (y * w + x) * 4;
+      var v = Math.round(255 - (1 - hs) * 100), k = (y * w + x) * 4;
       img.data[k] = v; img.data[k + 1] = v; img.data[k + 2] = v; img.data[k + 3] = 255;
     }
     cx.putImageData(img, 0, 0);
@@ -139,7 +139,7 @@
     cx.beginPath(); cx.rect(dest.x, dest.y, dest.w, dest.h); cx.clip();
     if (o.aclarar) { cx.fillStyle = 'rgba(255,255,255,.55)'; cx.fillRect(dest.x, dest.y, dest.w, dest.h); }
     if (o.sombra) {
-      cx.globalCompositeOperation = 'multiply'; cx.globalAlpha = .85;
+      cx.globalCompositeOperation = 'multiply'; cx.globalAlpha = .75;
       cx.imageSmoothingEnabled = true; cx.drawImage(sombreado(d), dest.x, dest.y, dest.w, dest.h);
       cx.globalCompositeOperation = 'source-over'; cx.globalAlpha = 1;
     }

@@ -194,9 +194,13 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
       <h2><b>8</b>Opciones Pro</h2>
       <label>Escala<select id="pro-escala"><option value="0">Libre (la que ves)</option><option value="25000">1:25.000 exacta</option><option value="50000">1:50.000 exacta</option></select></label>
       <label>Grilla<select id="pro-grilla"><option value="utm">UTM (WGS84), cada 1 km</option><option value="no">Sin grilla</option></select></label>
+      <label style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="pro-curvas" checked style="width:16px;height:16px;accent-color:var(--acento)">Curvas de nivel propias, con cotas</label>
+      <label style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="pro-sombra" checked style="width:16px;height:16px;accent-color:var(--acento)">Sombreado de relieve</label>
+      <label style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="pro-aclarar" checked style="width:16px;height:16px;accent-color:var(--acento)">Aclarar el mapa base (resalta las curvas)</label>
+      <p class="ayuda" id="pro-relieve-info" aria-live="polite"></p>
       <label>Tu track (GPX o KML)<input id="pro-gpx" type="file" accept=".gpx,.kml,application/gpx+xml,application/vnd.google-earth.kml+xml" style="font-weight:400;font-size:13px"></label>
       <div class="fila"><p class="ayuda" id="pro-gpx-info" style="flex:1"></p><button id="pro-gpx-quitar" class="btn btn-borde" type="button" style="flex:none;min-height:34px;padding:4px 10px;font-size:13px">Quitar</button></div>
-      <p class="ayuda">Con escala exacta el mapa queda fijo en ese tamaño: movelo para encuadrar. Si el track tiene alturas, se agrega el perfil en la hoja. El PDF Pro sale sin marca de agua.</p>
+      <p class="ayuda">Con escala exacta el mapa queda fijo en ese tamaño: movelo para encuadrar. Las curvas y el sombreado se calculan desde un modelo de elevación (SRTM): para un fondo limpio probá «Relieve» o «Satelital» como mapa base. Si el track tiene alturas, se agrega el perfil. El PDF Pro sale sin marca de agua.</p>
     </section>
 
     <div class="generar">
@@ -246,6 +250,8 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="pro-pre.js?v=1"></script>
 <script src="mapa.js?v=3"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="pro.js?v=1"></script>
+<script src="pro-relieve.js?v=2"></script>
 </body>
 </html>
