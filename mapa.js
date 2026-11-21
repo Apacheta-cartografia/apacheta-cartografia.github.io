@@ -42,7 +42,7 @@
     poligono: { nombre: 'Áreas propias', tipo: 'area-propia', color: C.acento, icono: '▱' }
   };
 
-  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 } };
+  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 }, a2: { w: 420, h: 594 }, a1: { w: 594, h: 841 } };
   var DPI = 200, PPM = DPI / 25.4;
   var ZOOM_MIN_DATOS = 10, MAX_PROPIOS = 30;
 
@@ -755,6 +755,7 @@
   }
 
   function componer() {
+    var PPM = (window.APACHETA_DPI || DPI) / 25.4;   // la versión Pro puede pedir 300 dpi
     var h = hoja(), W = Math.round(h.W * PPM), H = Math.round(h.H * PPM);
     var mm = function (v) { return v * PPM; };
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -771,7 +772,7 @@
       pw = se.x - nw.x; ph = se.y - nw.y;
     }
     medir();
-    while (contarTeselas(fondo, zr, nw, pw, ph) > 300 && zr > 1) { zr--; medir(); }
+    while (contarTeselas(fondo, zr, nw, pw, ph) > (window.APACHETA_MAX_TESELAS || 300) && zr > 1) { zr--; medir(); }
     var s = fw / pw;
 
     var off = document.createElement('canvas'); off.width = Math.ceil(pw); off.height = Math.ceil(ph);

@@ -185,9 +185,11 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
     <section class="paso">
       <h2><b>7</b>Hoja</h2>
       <div class="fila">
-        <label>Tamaño<select id="tamano"><option value="a4">A4</option><option value="a3">A3</option></select></label>
+        <label>Tamaño<select id="tamano"><option value="a4">A4</option><option value="a3">A3</option><option value="a2">A2</option><option value="a1">A1</option></select></label>
         <label>Orientación<select id="orientacion"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select></label>
       </div>
+      <label>Resolución<select id="pro-dpi"><option value="300">300 dpi · para imprenta</option><option value="200">200 dpi · más liviano</option></select></label>
+      <p class="ayuda" id="pro-dpi-info" aria-live="polite"></p>
     </section>
 
     <section class="paso">
@@ -249,9 +251,9 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="pro-pre.js?v=1"></script>
-<script src="mapa.js?v=3"></script>
+<script src="mapa.js?v=4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="pro.js?v=1"></script>
-<script src="pro-relieve.js?v=2"></script>
+<script src="pro.js?v=2"></script>
+<script src="pro-relieve.js?v=3"></script>
 </body>
 </html>

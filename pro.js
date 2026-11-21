@@ -5,8 +5,8 @@
   var API = 'https://apacheta-pro.apacheta-cartografia.workers.dev';
   var CLAVE = 'apacheta-pro-codigo';
   var C = { tinta: '#16201D', texto: '#3B4440', gris: '#5A625E', acento: '#9A3F1C' };
-  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 } };
-  var PPM = 200 / 25.4;
+  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 }, a2: { w: 420, h: 594 }, a1: { w: 594, h: 841 } };
+  function ppm() { return (window.APACHETA_DPI || 200) / 25.4; }
   var map = window.APACHETA_MAP;
   var $ = function (id) { return document.getElementById(id); };
   var pro = { codigo: '', restantes: 0, ok: false, escala: 0, grilla: 'utm', track: null, capaTrack: null, capaGrilla: null };
@@ -174,7 +174,7 @@
 
   /* ---------- Dibujo sobre la hoja en alta resolución ---------- */
   function decorar(cv) {
-    var h = hoja(), mm = function (v) { return v * PPM; };
+    var h = hoja(), PPM = ppm(), mm = function (v) { return v * PPM; };
     var fx = mm(h.mapa.x), fy = mm(h.mapa.y), fw = mm(h.mapa.w), fh = mm(h.mapa.h);
     var b = map.getBounds(), z = 20, nw = map.project(b.getNorthWest(), z), se = map.project(b.getSouthEast(), z);
     var sx = fw / (se.x - nw.x), sy = fh / (se.y - nw.y);
@@ -235,13 +235,24 @@
   // La hoja en alta resolución la arma mapa.js; antes de convertirla a imagen se le suman grilla, track y perfil.
   var origDataURL = HTMLCanvasElement.prototype.toDataURL;
   HTMLCanvasElement.prototype.toDataURL = function () {
-    var h = hoja();
+    var h = hoja(), PPM = ppm();
     if (!this.__pro && this.width === Math.round(h.W * PPM) && this.height === Math.round(h.H * PPM)) {
       this.__pro = true;
       try { decorar(this); } catch (e) { console.error(e); }
     }
     return origDataURL.apply(this, arguments);
   };
+
+  /* ---------- Resolución y tamaño de hoja ---------- */
+  function aplicarResolucion() {
+    var dpi = +$('pro-dpi').value || 200;
+    if ($('tamano').value === 'a1' && dpi > 200) { dpi = 200; $('pro-dpi-info').textContent = 'En A1 se arma a 200 dpi para que el navegador pueda con la hoja.'; }
+    else $('pro-dpi-info').textContent = $('tamano').value === 'a2' || $('tamano').value === 'a1' ? 'Hoja grande: el PDF puede tardar un poco más en prepararse.' : '';
+    window.APACHETA_DPI = dpi; window.APACHETA_MAX_TESELAS = 900;
+  }
+  $('pro-dpi').addEventListener('change', aplicarResolucion);
+  $('tamano').addEventListener('change', aplicarResolucion);
+  aplicarResolucion();
 
   /* ---------- Control de usos ---------- */
   $('generar').addEventListener('click', function (e) {

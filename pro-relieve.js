@@ -5,8 +5,8 @@
   var map = window.APACHETA_MAP;
   var $ = function (id) { return document.getElementById(id); };
   var DEM_URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
-  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 } };
-  var PPM = 200 / 25.4;
+  var HOJAS = { a4: { w: 210, h: 297 }, a3: { w: 297, h: 420 }, a2: { w: 420, h: 594 }, a1: { w: 594, h: 841 } };
+  function ppm() { return (window.APACHETA_DPI || 200) / 25.4; }
   var COLOR = '#8A5A33';
   var dem = null, cargando = null, overlay = null, temporizador = null;
   map.createPane('relieve'); map.getPane('relieve').style.zIndex = 250; map.getPane('relieve').style.pointerEvents = 'none';
@@ -45,8 +45,8 @@
     var clave = claveVista();
     if (dem && dem.clave === clave) return Promise.resolve(dem);
     if (cargando && cargando.clave === clave) return cargando.p;
-    var b = map.getBounds(), z = 9, nw, se;
-    for (; z <= 15; z++) { nw = map.project(b.getNorthWest(), z); se = map.project(b.getSouthEast(), z); if (se.x - nw.x >= 900) break; }
+    var b = map.getBounds(), z = 9, nw, se, objetivo = Math.min(3000, Math.max(900, hoja().mapa.w * 6));
+    for (; z <= 15; z++) { nw = map.project(b.getNorthWest(), z); se = map.project(b.getSouthEast(), z); if (se.x - nw.x >= objetivo) break; }
     z = Math.min(z, 15); nw = map.project(b.getNorthWest(), z); se = map.project(b.getSouthEast(), z);
     var tx0 = Math.floor(nw.x / 256), ty0 = Math.floor(nw.y / 256), tx1 = Math.floor(se.x / 256), ty1 = Math.floor(se.y / 256);
     var ancho = (tx1 - tx0 + 1) * 256, alto = (ty1 - ty0 + 1) * 256;
@@ -209,7 +209,7 @@
   CanvasRenderingContext2D.prototype.drawImage = function () {
     var r = origDraw.apply(this, arguments);
     if (arguments.length === 9 && dem && activo() && !this.__relieve) {
-      var h = hoja(), W = Math.round(h.W * PPM), H = Math.round(h.H * PPM);
+      var h = hoja(), PPM = ppm(), W = Math.round(h.W * PPM), H = Math.round(h.H * PPM);
       if (this.canvas && this.canvas.width === W && this.canvas.height === H) {
         this.__relieve = true;
         try {
@@ -236,7 +236,7 @@
       var q = equidistancia(), extra = 'Relieve: Terrain Tiles (AWS, SRTM)' + (opciones().curvas ? ' · Curvas cada ' + q.eq + ' m' : '') + ' · ';
       arguments[0] = t.replace('Web Mercator · ', 'Web Mercator · ' + extra);
       // Achicar la letra si el pie no entra en el ancho de la hoja (se suma también la nota de la grilla)
-      var disp = (hoja().W - 20) * PPM, med = this.measureText(arguments[0] + ' Grilla UTM zona 19S (WGS84) · ').width;
+      var disp = (hoja().W - 20) * ppm(), med = this.measureText(arguments[0] + ' Grilla UTM zona 19S (WGS84) · ').width;
       if (med > disp) this.font = this.font.replace(/([\d.]+)px/, function (m, n) { return (parseFloat(n) * disp / med) + 'px'; });
     }
     return origFill.apply(this, arguments);
