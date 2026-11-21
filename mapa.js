@@ -48,6 +48,8 @@
 
   /* ================= Estado ================= */
   var estado = { fondo: 'topografico', datos: null, claveDatos: '', propios: [], pdf: null };
+  window.APACHETA_ESTADO = estado;   // la versión Pro guarda y abre proyectos
+  window.APACHETA_REDIBUJAR = function () { dibujarPropios(); listarPropios(); pintar(); };
   var dib = { modo: null, verts: [] };
   var $ = function (id) { return document.getElementById(id); };
   var medidor = document.createElement('canvas').getContext('2d');

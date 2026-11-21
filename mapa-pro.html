@@ -26,7 +26,7 @@ h2,.marca-nombre strong,button{font-family:Inter,sans-serif}
 .paso h2{margin:0;font-size:15px;display:flex;align-items:center;gap:10px}
 .paso h2 b{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--tinta);color:#fff;font-size:12px}
 label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600}
-input[type=text],input[type=search],select{font:inherit;font-weight:400;font-size:14px;padding:10px 12px;border:1px solid #A9ABA3;border-radius:6px;background:var(--fondo);color:var(--tinta);width:100%}
+input[type=text],input[type=search],input[type=email],select{font:inherit;font-weight:400;font-size:14px;padding:10px 12px;border:1px solid #A9ABA3;border-radius:6px;background:var(--fondo);color:var(--tinta);width:100%}
 input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);outline-offset:1px}
 .fila{display:flex;gap:8px}
 .fila>*{flex:1}
@@ -205,10 +205,34 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
       <p class="ayuda">Con escala exacta el mapa queda fijo en ese tamaño: movelo para encuadrar. Las curvas y el sombreado se calculan desde un modelo de elevación (SRTM): para un fondo limpio probá «Relieve» o «Satelital» como mapa base. Si el track tiene alturas, se agrega el perfil. El PDF Pro sale sin marca de agua.</p>
     </section>
 
+    <section class="paso">
+      <h2><b>9</b>Más opciones Pro</h2>
+      <label style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="pro-geo" checked style="width:16px;height:16px;accent-color:var(--acento)">PDF georreferenciado (Avenza Maps, QGIS)</label>
+      <p class="ayuda">Abrilo en Avenza Maps u otra app de mapas en PDF y vas a ver tu posición sobre el mapa, también sin señal.</p>
+      <label>Logo de tu club, empresa o cliente<input id="pro-logo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="font-weight:400;font-size:13px"></label>
+      <div class="fila"><p class="ayuda" id="pro-logo-info" style="flex:1"></p><button id="pro-logo-quitar" class="btn btn-borde" type="button" style="flex:none;min-height:34px;padding:4px 10px;font-size:13px">Quitar</button></div>
+      <div class="fila" style="gap:8px;margin-top:6px">
+        <button id="pro-guardar" class="btn btn-borde" type="button" style="flex:1">Guardar proyecto</button>
+        <label class="btn btn-borde" style="flex:1;cursor:pointer;justify-content:center">Abrir proyecto<input id="pro-abrir" type="file" accept=".json,application/json" hidden></label>
+      </div>
+      <p class="ayuda" id="pro-proyecto-info">Guardá el mapa en un archivo para seguir editándolo otro día o hacer versiones.</p>
+    </section>
+
     <div class="generar">
       <button id="generar" class="btn" type="button">Preparar PDF</button>
       <p id="estado-gen" aria-live="polite"></p>
     </div>
+    <section class="paso" id="mejorar">
+      <h2><b>10</b>¿Cómo la mejoramos?</h2>
+      <p class="ayuda">La versión Pro está en desarrollo. Contanos qué te faltó, qué no anduvo o qué te gustaría que haga.</p>
+      <form id="pro-comentario-form">
+        <label>Tu comentario<textarea id="pro-comentario" rows="4" maxlength="1500" style="font:inherit;font-size:14px;padding:8px;border:1px solid #A9ABA3;border-radius:6px;resize:vertical"></textarea></label>
+        <label>Correo (opcional, si querés respuesta)<input id="pro-comentario-contacto" type="email" maxlength="120" autocomplete="email"></label>
+        <button class="btn btn-borde" type="submit" style="margin-top:6px">Enviar comentario</button>
+        <p class="ayuda" id="pro-comentario-info" aria-live="polite"></p>
+      </form>
+      <p class="ayuda" style="margin-top:10px;padding:8px 10px;background:#FBF3EE;border-left:3px solid #E3A383;border-radius:0 6px 6px 0"><b>Pronto: la app de Apacheta.</b> Tus mapas, GPS, brújula y mapas sin conexión, todo en el celular.</p>
+    </section>
   </aside>
 
   <main id="mapa-wrap">
@@ -251,9 +275,10 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acento);ou
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="pro-pre.js?v=1"></script>
-<script src="mapa.js?v=4"></script>
+<script src="mapa.js?v=5"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="pro.js?v=2"></script>
 <script src="pro-relieve.js?v=3"></script>
+<script src="pro-extra.js?v=1"></script>
 </body>
 </html>
