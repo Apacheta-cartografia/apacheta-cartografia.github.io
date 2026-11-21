@@ -4,8 +4,8 @@
   if (!window.L || !('serviceWorker' in navigator) || !window.caches) return;
 
   var SITIO = 'apacheta-sitio-v1', ZONAS = 'apacheta-zonas-v1', CLAVE = 'apacheta-zonas';
-  var MAX_TESELAS = 900;       // tope por zona, para no abusar de los servidores de mapas
-  var NIVELES_EXTRA = 4;       // desde el zoom actual, hasta 4 niveles más de detalle
+  var MAX_TESELAS = 1200;      // tope por zona, para no abusar de los servidores de mapas
+  var NIVELES_EXTRA = 4;       // desde el zoom actual, hasta 4 niveles más de detalle (menos si la zona es grande)
 
   navigator.serviceWorker.register('sw.js').catch(function () {});
 
@@ -106,20 +106,23 @@
 
     function teselas() {
       var capa = capaBase(); if (!capa) return null;
-      var b = map.getBounds(), z0 = Math.max(Math.round(map.getZoom()), 8);
+      var b = map.getBounds(), z0 = Math.max(Math.floor(map.getZoom()), 8);
       var zMax = Math.min(z0 + NIVELES_EXTRA, capa.options.maxZoom || 17);
-      var lista = [];
+      var lista = [], hasta = z0 - 1;
       for (var z = z0; z <= zMax; z++) {
+        var nivel = [];
         var x1 = lon2x(b.getWest(), z), x2 = lon2x(b.getEast(), z);
         var y1 = lat2y(b.getNorth(), z), y2 = lat2y(b.getSouth(), z);
         for (var x = x1; x <= x2; x++) for (var y = y1; y <= y2; y++) {
           var sub = capa.options.subdomains ? capa.options.subdomains[(x + y) % capa.options.subdomains.length] : '';
           var url = L.Util.template(capa._url, L.extend({ s: sub, x: x, y: y, z: z, r: '' }, capa.options));
-          lista.push({ url: url, clave: url.replace(/\/\/[abc]\.tile\.opentopomap\.org/, '//tile.opentopomap.org') });
+          nivel.push({ url: url, clave: url.replace(/\/\/[abc]\.tile\.opentopomap\.org/, '//tile.opentopomap.org') });
         }
-        if (lista.length > MAX_TESELAS) return { capa: capa, lista: lista, z0: z0, zMax: z, pasado: true };
+        if (lista.length + nivel.length > MAX_TESELAS) break;
+        lista = lista.concat(nivel); hasta = z;
       }
-      return { capa: capa, lista: lista, z0: z0, zMax: zMax };
+      // Hace falta al menos el zoom actual y dos niveles más de detalle
+      return { capa: capa, lista: lista, z0: z0, zMax: hasta, pasado: hasta < Math.min(z0 + 2, zMax) };
     }
 
     function calcular() {
