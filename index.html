@@ -131,6 +131,17 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
   .producto-img{min-height:0;padding:20px}
   nav{gap:2px 16px}
 }
+.medida .comparar{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:32px}
+.medida .caja{border:1px solid var(--linea);border-radius:10px;padding:28px;background:#FFFFFF}
+.medida .caja.destacada{border:2px solid var(--acento)}
+.medida .caja h3{margin:0 0 6px;font-size:20px}
+.medida .caja .sub{margin:0 0 14px;font-size:14px;color:var(--gris)}
+.medida .caja ul{margin:0;padding-left:18px;font-size:15px;line-height:1.75;color:var(--texto)}
+.medida .cierre{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;padding:26px 28px;border-radius:10px;background:var(--tinta);color:#FFFFFF}
+.medida .cierre p{margin:0;font-size:18px;line-height:1.5;max-width:46rem}
+.arma-pie a{color:var(--claro);font-weight:600}
+.aporte{margin:0;font-size:14px;color:var(--gris)}
+.aporte a{font-weight:600}
 </style>
 </head>
 <body>
@@ -142,6 +153,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
       <a href="#visor">Visor territorial</a>
       <a href="#servicios">Servicios</a>
       <a href="#arma-tu-mapa">Armá tu mapa</a>
+      <a href="#a-medida">A medida</a>
       <a href="#mapas">Mapas impresos</a>
       <a href="#equipo">Quiénes somos</a>
       <a class="btn" href="#contacto">Contacto</a>
@@ -173,9 +185,9 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
 <section id="visor" class="bloque">
   <div class="cont">
     <div class="encabezado">
-      <p class="kicker">Visor territorial</p>
+      <p class="kicker">Visor territorial · herramienta gratuita</p>
       <h2 class="titulo">Nuestros proyectos, sobre el territorio</h2>
-      <p class="bajada">Cada trabajo se carga como una capa del visor. Seleccioná un proyecto para ver su ubicación y su ficha.</p>
+      <p class="bajada">Una muestra de lo que hacemos: cada trabajo se carga como una capa del visor. Seleccioná un proyecto para ver su ubicación y su ficha. Es de uso libre y se sostiene con colaboraciones.</p>
     </div>
     <div class="visor-marco">
       <iframe src="visor.html" title="Visor territorial de proyectos de Apacheta Cartografía" loading="lazy" allowfullscreen></iframe>
@@ -184,6 +196,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
       <span>Mapas base: Esri (satelital) y OpenTopoMap.</span>
       <a href="visor.html" target="_blank" rel="noopener">Abrir el visor en pantalla completa ↗</a>
     </div>
+    <p class="aporte" style="margin-top:10px">¿Te sirvió? <a href="https://cafecito.app/apachetacartografia" target="_blank" rel="noopener">Invitanos un cafecito ↗</a> · ¿Querés un visor así para tu organización o tu proyecto? <a href="#a-medida">Lo armamos a medida</a>.</p>
   </div>
 </section>
 
@@ -208,20 +221,20 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
 <section id="arma-tu-mapa" class="bloque oscuro arma">
   <div class="cont">
     <div class="arma-texto">
-      <p class="kicker">Servicio nuevo · en desarrollo</p>
+      <p class="kicker">Herramienta gratuita · se sostiene con colaboraciones</p>
       <h2 class="titulo">Armá tu propio mapa</h2>
       <p class="bajada">Elegí cualquier lugar, decidí qué querés ver y descargalo en PDF con el diseño de Apacheta: norte, escala gráfica, referencias y créditos ya resueltos.</p>
       <div class="acciones">
         <a class="btn btn-primario" href="mapa.html" target="_blank" rel="noopener">Armar mi mapa ↗</a>
       </div>
-      <p class="arma-pie">¿Necesitás algo más elaborado? Lo hacemos a medida.</p>
+      <p class="arma-pie">Es un mapa orientativo, armado con datos abiertos. Si lo necesitás para un proyecto, una obra o un informe, <a href="#a-medida">no uses la app: contratanos</a>.</p>
     </div>
     <div class="arma-col">
       <h3>Vos elegís</h3>
       <ul>
         <li>El lugar, buscándolo o moviendo el mapa</li>
         <li>Título y subtítulo</li>
-        <li>Fondo satelital o topográfico</li>
+        <li>Mapa base: topográfico, outdoor, satelital o relieve</li>
         <li>Caminos, senderos, ríos, lagunas, cumbres, refugios, localidades y puntos de interés</li>
         <li>Tus propios puntos, con nombre</li>
         <li>Hoja A4 o A3, vertical u horizontal</li>
@@ -236,6 +249,44 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
         <li>Créditos de las fuentes de datos</li>
         <li>PDF listo para imprimir o llevar en el celular</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section id="a-medida" class="bloque blanco medida">
+  <div class="cont">
+    <div class="encabezado">
+      <p class="kicker">Proyectos a medida</p>
+      <h2 class="titulo">¿Necesitás precisión? Trabajá con nuestro equipo</h2>
+      <p class="bajada">El visor y «Armá tu mapa» son herramientas libres para explorar y salir a la montaña. Cuando el mapa tiene que respaldar una decisión, un expediente o una obra, lo hacemos nosotros.</p>
+    </div>
+    <div class="comparar">
+      <div class="caja">
+        <h3>Herramientas gratuitas</h3>
+        <p class="sub">Para explorar, planificar una salida o tener un mapa rápido.</p>
+        <ul>
+          <li>Datos abiertos de OpenStreetMap, tal como están cargados</li>
+          <li>Escala aproximada y diseño estándar</li>
+          <li>Información orientativa: hay que verificarla</li>
+          <li>Lo armás vos, en minutos</li>
+        </ul>
+      </div>
+      <div class="caja destacada">
+        <h3>Proyecto con Apacheta</h3>
+        <p class="sub">Para organismos, empresas, organizaciones, productores y profesionales.</p>
+        <ul>
+          <li>Datos propios y verificados: relevamiento de campo, GPS, imágenes satelitales y fuentes oficiales</li>
+          <li>Escala exacta, sistema de coordenadas y precisión acordes al uso</li>
+          <li>Análisis territorial, socioeconómico y socioambiental, no solo el mapa</li>
+          <li>Informe técnico, cartografía y capas en formatos abiertos (SHP, GeoPackage, KML)</li>
+          <li>Visores web y bases de datos para tu organización</li>
+          <li>Propuesta por escrito con alcance, plazos y presupuesto</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cierre">
+      <p>Contanos qué necesitás y te respondemos con una propuesta técnica.</p>
+      <a class="btn btn-primario" href="#contacto">Solicitar una propuesta</a>
     </div>
   </div>
 </section>
