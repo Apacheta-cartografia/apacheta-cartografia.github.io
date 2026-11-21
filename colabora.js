@@ -26,7 +26,7 @@
       return orig.apply(this, arguments);
     };
   });
-  $('colabora').querySelector('p').textContent = 'Ya usaste tu descarga gratis. Esta herramienta es libre y la mantenemos a pulmón: con una colaboración en Cafecito habilitás 3 descargas más y tus mapas salen sin marca de agua.';
+  $('colabora').querySelector('p').textContent = 'Ya usaste tu descarga gratis. Esta herramienta es libre y la mantenemos a pulmón: con una colaboración en Cafecito (desde Argentina o desde cualquier otro país) habilitás 3 descargas más y tus mapas salen sin marca de agua.';
   $('ya-colabore').textContent = 'Ya colaboré: habilitar 3 descargas';
 
   function mostrar() {
@@ -41,7 +41,7 @@
   aviso.id = 'aviso-colabora';
   aviso.style.cssText = 'margin:0;font-size:12.5px;line-height:1.5;color:#3B4440';
   aviso.innerHTML = 'Esta herramienta es gratuita y se sostiene con colaboraciones. Si te sirvió, ' +
-    '<a href="' + CAFECITO_URL + '" target="_blank" rel="noopener" style="color:#9A3F1C;font-weight:600">invitanos un cafecito ↗</a>';
+    '<a href="' + CAFECITO_URL + '" target="_blank" rel="noopener" style="color:#9A3F1C;font-weight:600">invitanos un cafecito ↗</a>, desde Argentina o desde cualquier otro país.';
   $('generar').parentNode.insertBefore(aviso, $('generar'));
 
   $('ir-cafecito').href = CAFECITO_URL;
