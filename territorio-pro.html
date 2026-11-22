@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Territorio en datos Pro — Apacheta Cartografía</title>
-<meta name="description" content="Análisis del Censo 2022 por radio censal: cruces de variables, área de estudio propia, datos propios, mapeo colectivo e informe en PDF.">
+<meta name="description" content="Análisis del Censo 2022 por radio censal: cruces de variables, área de estudio propia, datos propios, mapa de aportes e informe en PDF.">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="territorio.css?v=1">
+<link rel="stylesheet" href="territorio.css?v=2">
 <style>
 .pestanas{flex-wrap:wrap}
 .pestanas button{flex:1 1 30%;padding:10px 4px;font-size:13px}
@@ -34,7 +34,7 @@ canvas.disp{width:100%;height:260px;border:1px solid var(--linea);border-radius:
 <div class="puerta" id="puerta">
   <div class="puerta-caja">
     <h2>Territorio en datos Pro</h2>
-    <p>Ingresá tu código Pro para usar los 23 indicadores del censo, cruces de variables, tu área de estudio, tus propios datos, el mapeo colectivo compartido y el informe en PDF.</p>
+    <p>Ingresá tu código Pro para usar los 23 indicadores del censo, cruces de variables, tu área de estudio, tus propios datos, el mapa de aportes compartido y el informe en PDF.</p>
     <form id="form-codigo" class="fila">
       <input id="codigo" type="text" placeholder="APA-XXXX-XXXX" autocomplete="off" style="flex:2;text-transform:uppercase">
       <button class="btn btn-primario" type="submit" style="flex:1">Entrar</button>
@@ -58,7 +58,7 @@ canvas.disp{width:100%;height:260px;border:1px solid var(--linea);border-radius:
       <button data-p="cruces">Cruces</button>
       <button data-p="area">Mi área</button>
       <button data-p="datos">Mis datos</button>
-      <button data-p="mapeo">Mapeo</button>
+      <button data-p="mapeo">Aportes</button>
       <button data-p="exportar">Informe</button>
     </nav>
 
@@ -108,9 +108,19 @@ canvas.disp{width:100%;height:260px;border:1px solid var(--linea);border-radius:
       <p class="ayuda">Tus archivos no se suben a ningún lado: se procesan en tu navegador.</p>
     </section>
 
-    <!-- MAPEO COLECTIVO -->
+    <!-- MAPA DE APORTES -->
     <section class="pagina" id="p-mapeo" hidden>
-      <p class="ayuda">Creá un mapeo colectivo y compartí el link: cada persona marca lugares desde el celular, sin registrarse. Vos ves y descargás todos los aportes.</p>
+      <div class="explica">
+        <h3>Mapa de aportes</h3>
+        <p>Sirve para juntar lo que la gente sabe de su territorio, ubicado en el mapa: encuestas georreferenciadas, diagnósticos barriales, relevamientos de problemas o de lugares valorados, o como insumo de un taller.</p>
+        <ol>
+          <li>Escribí el título, la pregunta y las categorías.</li>
+          <li>Centrá el mapa en tu zona y tocá «Crear mapa de aportes».</li>
+          <li>Compartí el link (WhatsApp, redes, un QR en el taller). Cada persona marca lugares desde el celular, sin registrarse, y deja un comentario.</li>
+          <li>Con «Ver aportes» ves los puntos y el conteo por radio censal, para cruzarlos con el censo. Los descargás en CSV o GeoJSON.</li>
+        </ol>
+        <p>Los aportes son anónimos: no se piden nombres ni teléfonos.</p>
+      </div>
       <label class="campo">Título <input id="mc-titulo" type="text" maxlength="90" placeholder="Ej.: ¿Dónde falta iluminación en el barrio?"></label>
       <label class="campo">Pregunta o consigna <textarea id="mc-pregunta" maxlength="300" rows="2" placeholder="Ej.: Marcá los lugares que te parecen inseguros de noche y contanos por qué."></textarea></label>
       <label class="campo">Categorías (una por línea, hasta 8) <textarea id="mc-cats" rows="4">Problema o conflicto
@@ -118,7 +128,7 @@ Lugar valorado
 Servicio que falta
 Lugar inseguro</textarea></label>
       <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input id="mc-publico" type="checkbox"> Los participantes ven los aportes de los demás</label>
-      <button id="mc-crear" class="btn btn-primario" type="button">Crear mapeo (centrado en la vista actual)</button>
+      <button id="mc-crear" class="btn btn-primario" type="button">Crear mapa de aportes (centrado en la vista actual)</button>
       <div class="mensaje" id="mc-msg" hidden></div>
       <div id="mc-mios"></div>
     </section>

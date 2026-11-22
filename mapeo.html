@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mapeo colectivo — Apacheta Cartografía</title>
+<title>Mapa de aportes — Apacheta Cartografía</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="territorio.css?v=1">
+<link rel="stylesheet" href="territorio.css?v=2">
 <style>
 .cats{display:flex;flex-direction:column;gap:6px}
 .cats label{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--linea);border-radius:8px;font-size:14px;cursor:pointer}
@@ -21,11 +21,12 @@
   <aside class="panel">
     <header class="marca">
       <a href="./" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
-      <p class="marca-sub">Mapeo colectivo</p>
+      <p class="marca-sub">Mapa de aportes</p>
     </header>
     <section class="pagina">
       <h2 id="titulo" style="margin:0;font-size:19px">Cargando…</h2>
       <p id="pregunta" class="ayuda" style="font-size:14px;color:var(--texto)"></p>
+      <p class="ayuda">Este es un mapa de aportes: cada persona marca en el mapa los lugares que conoce y cuenta qué pasa ahí. Con todos los aportes juntos se arma un diagnóstico del territorio.</p>
       <div class="cats" id="cats"></div>
       <p class="ayuda" id="paso">1. Elegí una categoría. 2. Tocá el lugar en el mapa. 3. Contanos qué pasa ahí y enviá.</p>
       <label class="campo">Comentario <textarea id="txt" maxlength="400" rows="3" placeholder="¿Qué pasa en este lugar?"></textarea></label>
@@ -33,7 +34,7 @@
       <div class="gracias" id="gracias" hidden></div>
       <p class="ayuda">No escribas nombres, teléfonos ni datos personales. Los aportes son anónimos.</p>
     </section>
-    <footer class="pie"><p>Hecho con la herramienta de mapeo colectivo de <a href="./" target="_blank" rel="noopener">Apacheta Cartografía</a>, un equipo de geógrafos, sociólogos y programadores.</p></footer>
+    <footer class="pie"><p>Hecho con el mapa de aportes de <a href="./" target="_blank" rel="noopener">Apacheta Cartografía</a>, un equipo de geógrafos, sociólogos y programadores.</p></footer>
   </aside>
   <main id="mapa" aria-label="Mapa"></main>
 </div>
@@ -50,11 +51,11 @@
   var marca = null, lugar = null, cfg = null, enviados = 0;
   function esc(t) { var d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; }
   function listo() { $('enviar').disabled = !(lugar && document.querySelector('input[name=cat]:checked')); }
-  if (!id) { $('titulo').textContent = 'Falta el link del mapeo.'; return; }
+  if (!id) { $('titulo').textContent = 'Falta el link del mapa.'; return; }
   fetch(API + '/mc/cfg?p=' + id).then(function (r) { return r.json(); }).then(function (j) {
     if (!j.ok) throw new Error();
     cfg = j.cfg;
-    document.title = cfg.titulo + ' — Mapeo colectivo';
+    document.title = cfg.titulo + ' — Mapa de aportes';
     $('titulo').textContent = cfg.titulo; $('pregunta').textContent = cfg.pregunta || '';
     $('cats').innerHTML = cfg.categorias.map(function (c, i) { return '<label><input type="radio" name="cat" value="' + esc(c) + '"><i style="background:' + COLS[i] + '"></i>' + esc(c) + '</label>'; }).join('');
     document.querySelectorAll('input[name=cat]').forEach(function (r) { r.addEventListener('change', listo); });
@@ -62,7 +63,7 @@
     if (cfg.publico) fetch(API + '/mc/aportes?p=' + id).then(function (r) { return r.json(); }).then(function (a) {
       (a.aportes || []).forEach(function (p) { var k = cfg.categorias.indexOf(p.c); L.circleMarker([p.la, p.lo], { radius: 6, color: '#fff', weight: 2, fillColor: COLS[k < 0 ? 5 : k], fillOpacity: .9 }).bindPopup('<b>' + esc(p.c) + '</b><br>' + esc(p.t)).addTo(map); });
     }).catch(function () {});
-  }).catch(function () { $('titulo').textContent = 'Este mapeo no existe o ya no está disponible.'; });
+  }).catch(function () { $('titulo').textContent = 'Este mapa no existe o ya no está disponible.'; });
   map.on('click', function (e) {
     lugar = e.latlng;
     if (marca) marca.setLatLng(lugar); else marca = L.marker(lugar).addTo(map);

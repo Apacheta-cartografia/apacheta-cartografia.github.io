@@ -1,5 +1,5 @@
 /* Apacheta · Territorio en datos Pro
-   Cruces de variables, área de estudio, datos propios, mapeo colectivo compartido, descargas e informe PDF. */
+   Cruces de variables, área de estudio, datos propios, mapa de aportes compartido, descargas e informe PDF. */
 (function () {
   'use strict';
   var API = 'https://apacheta-pro.apacheta-cartografia.workers.dev';
@@ -391,7 +391,7 @@
     }).then(function () { input.value = ''; });
   });
 
-  /* ================= Mapeo colectivo ================= */
+  /* ================= Mapa de aportes ================= */
   var capaMC = L.layerGroup().addTo(M.map);
   var COLS = ['#C0392B', '#2E7D6B', '#D68910', '#7D3C98', '#1F6FEB', '#4A524E', '#B03A6E', '#117A65'];
   function misMapeos() { return leerLS(CLAVE_MC, []); }
@@ -399,7 +399,7 @@
   function listarMapeos() {
     var ms = misMapeos();
     if (!ms.length) { $('mc-mios').innerHTML = ''; return; }
-    var h = '<p class="ayuda" style="margin:6px 0"><b>Tus mapeos</b> (guardados en este navegador; anotá el link de administración si vas a usar otra compu):</p>';
+    var h = '<p class="ayuda" style="margin:6px 0"><b>Tus mapas de aportes</b> (guardados en este navegador; anotá el link de administración si vas a usar otra compu):</p>';
     ms.forEach(function (m, i) {
       h += '<div class="ficha" style="margin-bottom:8px"><b>' + esc(m.titulo) + '</b><p class="ayuda" style="margin:4px 0">Link para compartir:</p><div class="linkbox">' + esc(linkPublico(m.id)) + '</div>' +
         '<div class="fila" style="margin-top:8px"><button class="btn btn-borde" data-a="copiar" data-i="' + i + '">Copiar link</button><button class="btn btn-primario" data-a="ver" data-i="' + i + '">Ver aportes</button></div>' +
@@ -417,9 +417,9 @@
       centro: [+c.lat.toFixed(5), +c.lng.toFixed(5), M.map.getZoom()] }) })
       .then(function (r) { return r.json(); }).then(function (j) {
         if (!j.ok) throw new Error(j.error || 'error');
-        var ms = misMapeos(); ms.unshift({ id: j.id, admin: j.admin, titulo: $('mc-titulo').value || 'Mapeo colectivo', categorias: cats }); guardarLS(CLAVE_MC, ms);
+        var ms = misMapeos(); ms.unshift({ id: j.id, admin: j.admin, titulo: $('mc-titulo').value || 'Mapa de aportes', categorias: cats }); guardarLS(CLAVE_MC, ms);
         msg('mc-msg', 'Listo. Compartí el link: cada aporte queda guardado y lo ves con «Ver aportes».'); listarMapeos();
-      }).catch(function (e) { msg('mc-msg', e.message === 'limite' ? 'Llegaste al máximo de 20 mapeos por código.' : 'No se pudo crear el mapeo. Probá de nuevo.'); })
+      }).catch(function (e) { msg('mc-msg', e.message === 'limite' ? 'Llegaste al máximo de 20 mapas de aportes por código.' : 'No se pudo crear el mapa. Probá de nuevo.'); })
       .then(function () { btn.disabled = false; });
   });
   var aportesCache = {};

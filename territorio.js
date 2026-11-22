@@ -39,7 +39,7 @@
     });
   });
 
-  /* ---------- Mapeo colectivo (demo: solo en este navegador) ---------- */
+  /* ---------- Mapa de aportes (demo: solo en este navegador) ---------- */
   var CLAVE = 'apacheta-mapeo-demo';
   var COLORES = { problema: '#C0392B', valorado: '#2E7D6B', falta: '#D68910', inseguro: '#7D3C98', otro: '#4A524E' };
   var NOMBRES = { problema: 'Problema o conflicto', valorado: 'Lugar valorado', falta: 'Servicio que falta', inseguro: 'Lugar inseguro', otro: 'Otro' };
@@ -84,7 +84,7 @@
       return { type: 'Feature', geometry: { type: 'Point', coordinates: [p.lon, p.lat] }, properties: { categoria: NOMBRES[p.cat], comentario: p.txt, fecha: p.fecha } };
     }) };
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(g, null, 1)], { type: 'application/geo+json' }));
-    a.download = 'mapeo-colectivo.geojson'; document.body.appendChild(a); a.click(); a.remove();
+    a.download = 'mapa-de-aportes.geojson'; document.body.appendChild(a); a.click(); a.remove();
   });
   $('mc-borrar').addEventListener('click', function () {
     if (!puntos.length || !window.confirm('¿Borrar todos los puntos marcados?')) return;

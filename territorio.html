@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Territorio en datos (demo) — Apacheta Cartografía</title>
-<meta name="description" content="Mapa del Censo 2022 por radio censal para toda la Argentina y mapeo colectivo. Herramienta gratuita de Apacheta Cartografía.">
+<meta name="description" content="Mapa del Censo 2022 por radio censal para toda la Argentina y mapa de aportes. Herramienta gratuita de Apacheta Cartografía.">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="territorio.css?v=1">
+<link rel="stylesheet" href="territorio.css?v=2">
 </head>
 <body>
 <div class="app">
@@ -20,7 +20,7 @@
 
     <nav class="pestanas" role="tablist">
       <button class="activa" data-p="censo" role="tab">Mapa censal</button>
-      <button data-p="mapeo" role="tab">Mapeo colectivo</button>
+      <button data-p="mapeo" role="tab">Mapa de aportes</button>
     </nav>
 
     <section class="pagina" id="p-censo">
@@ -48,7 +48,12 @@
     </section>
 
     <section class="pagina" id="p-mapeo" hidden>
-      <p class="ayuda">Marcá lugares en el mapa: elegí una categoría, tocá el mapa y escribí un comentario. En la demo se guarda solo en este navegador.</p>
+      <div class="explica">
+        <h3>¿Qué es el mapa de aportes?</h3>
+        <p>Una forma de juntar lo que la gente sabe de su territorio, ubicado en el mapa. Hacés una pregunta (por ejemplo, «¿dónde falta iluminación?»), compartís un link y cada persona marca lugares desde el celular y deja un comentario.</p>
+        <p>Después ves todos los aportes juntos: dónde se concentran, qué categoría pesa más y cómo se relacionan con los datos del censo de cada radio.</p>
+        <p><b>Probalo acá:</b> elegí una categoría, tocá «Marcar en el mapa», tocá un lugar y escribí un comentario. En la demo los puntos quedan solo en este navegador. Con la versión Pro creás el link para compartir y recibís los aportes de todos.</p>
+      </div>
       <label class="campo">Categoría
         <select id="mc-cat">
           <option value="problema">Problema o conflicto</option>

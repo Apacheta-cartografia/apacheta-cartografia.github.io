@@ -22,6 +22,12 @@ a{color:var(--acento)}
 .campo{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:13px}
 select,input[type=text],input[type=number],textarea{font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid #A9ABA3;border-radius:6px;background:#fff;width:100%}
 .ayuda{margin:0;font-size:13px;line-height:1.5;color:var(--gris)}
+.explica{background:#FBF6F0;border:1px solid var(--linea);border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.55}
+.explica h3{margin:0 0 6px;font-size:15px}
+.explica p{margin:0 0 8px}
+.explica p:last-child{margin:0}
+.explica ol{margin:0 0 8px;padding-left:18px}
+.explica li{margin-bottom:4px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:6px;font:600 14px Inter,sans-serif;text-decoration:none;cursor:pointer;border:1px solid var(--tinta)}
 .btn-primario{background:var(--tinta);color:#fff}
 .btn-borde{background:#fff;color:var(--tinta)}
