@@ -7,11 +7,12 @@
     var o = opciones || {};
     var map = L.map(o.contenedor || 'mapa', { preferCanvas: true, zoomControl: true }).setView([-38.5, -64], 4);
     var lienzo = L.canvas({ padding: 0.3 });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap · © CARTO', subdomains: 'abcd', maxZoom: 18
+    var esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
+    L.tileLayer(esri + 'World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Base: Esri, HERE, Garmin, © OpenStreetMap', maxZoom: 16
     }).addTo(map);
     map.createPane('etiquetas'); map.getPane('etiquetas').style.zIndex = 450; map.getPane('etiquetas').style.pointerEvents = 'none';
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', pane: 'etiquetas', maxZoom: 18 }).addTo(map);
+    L.tileLayer(esri + 'World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { pane: 'etiquetas', maxZoom: 16 }).addTo(map);
     map.attributionControl.addAttribution('Datos: INDEC Censo 2022 · radios: CONICET (CC-BY 4.0)');
 
     var estado = { variable: o.variable || 'nbi', nivel: 'pais', prov: null, deptos: null, radios: null, capa: null, cortes: [], resaltado: null, valorDe: null };
