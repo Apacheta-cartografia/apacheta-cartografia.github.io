@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Territorio en datos (demo) — Apacheta Cartografía</title>
+<meta name="description" content="Mapa del Censo 2022 por radio censal para toda la Argentina y mapeo colectivo. Herramienta gratuita de Apacheta Cartografía.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="territorio.css?v=1">
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <header class="marca">
+      <a href="./" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
+      <p class="marca-sub">Territorio en datos <span class="etiqueta">Demo</span></p>
+      <p class="marca-sub equipo">Hecha por un equipo de geógrafos, sociólogos y programadores. <a href="./#a-medida" target="_blank" rel="noopener">¿Tu proyecto necesita algo a medida?</a></p>
+    </header>
+
+    <nav class="pestanas" role="tablist">
+      <button class="activa" data-p="censo" role="tab">Mapa censal</button>
+      <button data-p="mapeo" role="tab">Mapeo colectivo</button>
+    </nav>
+
+    <section class="pagina" id="p-censo">
+      <label class="campo">Variable
+        <select id="variable">
+          <option value="nbi">Hogares con NBI</option>
+          <option value="inet">Hogares con internet</option>
+          <option value="den">Densidad de población</option>
+        </select>
+      </label>
+      <p class="ayuda" id="nivel">Todo el país, por departamento. Tocá un departamento para ver sus radios censales.</p>
+      <button id="volver" class="btn btn-borde" type="button" hidden>← Volver a todo el país</button>
+      <div id="ficha" class="ficha" hidden></div>
+      <div class="pro-caja">
+        <b>En la versión Pro</b>
+        <ul>
+          <li>23 indicadores del censo (agua, cloaca, hacinamiento, educación, empleo, edad, migración…)</li>
+          <li>Cruce de dos variables con mapa bivariado, gráfico y correlación</li>
+          <li>Dibujá tu área de estudio y obtené sus números</li>
+          <li>Cargá tus propios datos (CSV por radio o puntos)</li>
+          <li>Descargas en CSV y GeoJSON e informe en PDF</li>
+        </ul>
+        <a class="btn btn-primario" href="territorio-pro.html">Ver la versión Pro</a>
+      </div>
+    </section>
+
+    <section class="pagina" id="p-mapeo" hidden>
+      <p class="ayuda">Marcá lugares en el mapa: elegí una categoría, tocá el mapa y escribí un comentario. En la demo se guarda solo en este navegador.</p>
+      <label class="campo">Categoría
+        <select id="mc-cat">
+          <option value="problema">Problema o conflicto</option>
+          <option value="valorado">Lugar valorado</option>
+          <option value="falta">Servicio que falta</option>
+          <option value="inseguro">Lugar inseguro</option>
+          <option value="otro">Otro</option>
+        </select>
+      </label>
+      <button id="mc-marcar" class="btn btn-primario" type="button">Marcar en el mapa</button>
+      <ul id="mc-lista" class="mc-lista"></ul>
+      <div class="fila">
+        <button id="mc-bajar" class="btn btn-borde" type="button">Descargar (GeoJSON)</button>
+        <button id="mc-borrar" class="btn btn-borde" type="button">Borrar todo</button>
+      </div>
+      <div class="pro-caja">
+        <b>En la versión Pro</b>
+        <ul>
+          <li>Proyecto compartido: mandás un link y tu comunidad marca desde el celular</li>
+          <li>Tus propias categorías y preguntas</li>
+          <li>Ves todos los aportes, los cruzás con el censo y los descargás</li>
+        </ul>
+        <a class="btn btn-primario" href="territorio-pro.html">Ver la versión Pro</a>
+      </div>
+    </section>
+
+    <footer class="pie">
+      <p id="fuente"></p>
+      <p>Herramienta gratuita: se sostiene con colaboraciones. <a href="https://cafecito.app/apachetacartografia" target="_blank" rel="noopener">Invitanos un cafecito ↗</a>, desde Argentina o desde cualquier otro país.</p>
+    </footer>
+  </aside>
+  <main id="mapa" aria-label="Mapa"></main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="cs-comun.js?v=1"></script>
+<script src="cs-mapa.js?v=1"></script>
+<script src="territorio.js?v=1"></script>
+<!-- Estadísticas de visitas: Cloudflare Web Analytics (sin cookies) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "91a02567f6fb489897042f0991a3ba9a"}'></script>
+</body>
+</html>

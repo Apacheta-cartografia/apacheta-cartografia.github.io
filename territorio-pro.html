@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Territorio en datos Pro — Apacheta Cartografía</title>
+<meta name="description" content="Análisis del Censo 2022 por radio censal: cruces de variables, área de estudio propia, datos propios, mapeo colectivo e informe en PDF.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="territorio.css?v=1">
+<style>
+.pestanas{flex-wrap:wrap}
+.pestanas button{flex:1 1 30%;padding:10px 4px;font-size:13px}
+.puerta{position:fixed;inset:0;z-index:2000;background:rgba(22,32,29,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.puerta[hidden]{display:none}
+.puerta-caja{background:#fff;border-radius:12px;max-width:440px;width:100%;padding:24px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5}
+.puerta-caja h2{margin:0;font-size:20px}
+.estado-pro{font-size:13px;color:var(--gris);margin:0}
+.tabla{width:100%;border-collapse:collapse;font-size:12.5px}
+.tabla th{text-align:right;font:600 11px Inter,sans-serif;color:var(--gris);padding:4px 0 4px 6px;border-bottom:1px solid var(--linea)}
+.tabla th:first-child{text-align:left;padding-left:0}
+.tabla td{padding:4px 0 4px 6px;border-bottom:1px solid #EEEFEA;text-align:right;white-space:nowrap}
+.tabla td:first-child{text-align:left;white-space:normal;padding-left:0}
+canvas.disp{width:100%;height:260px;border:1px solid var(--linea);border-radius:6px;background:#fff}
+.bivar{display:grid;grid-template-columns:repeat(3,22px);gap:2px;margin:6px 0}
+.bivar i{width:22px;height:22px;display:block}
+.chip{display:inline-block;background:#EEEFEA;border-radius:12px;padding:2px 9px;font-size:12px;margin:2px 4px 2px 0}
+.mensaje{font-size:13px;line-height:1.5;padding:8px 10px;border-radius:6px;background:#FBF3EE;border-left:3px solid var(--claro)}
+.mensaje[hidden]{display:none}
+.linkbox{font-size:12px;word-break:break-all;background:#F6F6F3;padding:8px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="puerta" id="puerta">
+  <div class="puerta-caja">
+    <h2>Territorio en datos Pro</h2>
+    <p>Ingresá tu código Pro para usar los 23 indicadores del censo, cruces de variables, tu área de estudio, tus propios datos, el mapeo colectivo compartido y el informe en PDF.</p>
+    <form id="form-codigo" class="fila">
+      <input id="codigo" type="text" placeholder="APA-XXXX-XXXX" autocomplete="off" style="flex:2;text-transform:uppercase">
+      <button class="btn btn-primario" type="submit" style="flex:1">Entrar</button>
+    </form>
+    <p class="estado-pro" id="estado-codigo"></p>
+    <p class="ayuda">¿No tenés código? Pedilo invitando 4 cafecitos ($10.000) en <a href="https://cafecito.app/apachetacartografia" target="_blank" rel="noopener">Cafecito ↗</a> y dejando tu correo en el mensaje, desde Argentina o desde cualquier otro país. Para un estudio a medida, <a href="./#contacto">escribinos</a>.</p>
+    <a class="btn btn-borde" href="territorio.html">Seguir con la demo gratuita</a>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="panel">
+    <header class="marca">
+      <a href="./" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
+      <p class="marca-sub">Territorio en datos <span class="etiqueta">Pro</span></p>
+      <p class="marca-sub equipo">Hecha por un equipo de geógrafos, sociólogos y programadores. <a href="./#a-medida" target="_blank" rel="noopener">¿Necesitás un estudio a medida?</a></p>
+    </header>
+
+    <nav class="pestanas" role="tablist">
+      <button class="activa" data-p="mapa">Mapa</button>
+      <button data-p="cruces">Cruces</button>
+      <button data-p="area">Mi área</button>
+      <button data-p="datos">Mis datos</button>
+      <button data-p="mapeo">Mapeo</button>
+      <button data-p="exportar">Informe</button>
+    </nav>
+
+    <!-- MAPA -->
+    <section class="pagina" id="p-mapa">
+      <label class="campo">Variable <select id="variable"></select></label>
+      <p class="ayuda" id="nivel"></p>
+      <button id="volver" class="btn btn-borde" type="button" hidden>← Volver a todo el país</button>
+      <div id="ficha" class="ficha" hidden></div>
+    </section>
+
+    <!-- CRUCES -->
+    <section class="pagina" id="p-cruces" hidden>
+      <p class="ayuda">Elegí dos variables. El mapa pasa a bivariado (3 × 3 clases) y abajo ves la dispersión y la correlación entre los radios de la provincia o de tu área.</p>
+      <label class="campo">Variable X <select id="cx"></select></label>
+      <label class="campo">Variable Y <select id="cy"></select></label>
+      <div class="fila">
+        <button id="cruzar" class="btn btn-primario" type="button">Cruzar</button>
+        <button id="descruzar" class="btn btn-borde" type="button">Quitar cruce</button>
+      </div>
+      <div class="mensaje" id="cruce-msg" hidden></div>
+      <canvas id="disp" class="disp" width="640" height="520" hidden></canvas>
+      <div id="cruce-res"></div>
+    </section>
+
+    <!-- MI ÁREA -->
+    <section class="pagina" id="p-area" hidden>
+      <p class="ayuda">Definí tu área de estudio dentro de la provincia cargada: dibujá un polígono o marcá un punto con un radio en km. Se suman los radios censales cuyo centro cae adentro.</p>
+      <div class="fila">
+        <button id="dibujar" class="btn btn-primario" type="button">Dibujar polígono</button>
+        <button id="circulo" class="btn btn-borde" type="button">Punto + radio</button>
+      </div>
+      <label class="campo">Radio del círculo (km) <input id="km" type="number" min="0.2" max="50" step="0.1" value="1"></label>
+      <button id="terminar" class="btn btn-primario" type="button" hidden>Terminar polígono</button>
+      <button id="limpiar-area" class="btn btn-borde" type="button">Borrar área</button>
+      <div id="area-res"></div>
+    </section>
+
+    <!-- MIS DATOS -->
+    <section class="pagina" id="p-datos" hidden>
+      <p class="ayuda"><b>Tabla por radio o departamento:</b> un CSV con una columna de código (radio de 9 dígitos o departamento de 5) y columnas numéricas. Cada columna pasa a ser una variable del mapa y de los cruces.</p>
+      <label class="btn btn-borde" style="cursor:pointer">Cargar CSV por código<input id="csv-cod" type="file" accept=".csv,.txt" hidden></label>
+      <p class="ayuda"><b>Puntos:</b> un CSV con columnas lat y lon (o latitud/longitud), o un GeoJSON de puntos. Se dibujan y se cuentan por radio (cantidad y cada 1.000 habitantes).</p>
+      <label class="btn btn-borde" style="cursor:pointer">Cargar puntos<input id="puntos" type="file" accept=".csv,.txt,.geojson,.json" hidden></label>
+      <div class="mensaje" id="datos-msg" hidden></div>
+      <div id="datos-lista"></div>
+      <p class="ayuda">Tus archivos no se suben a ningún lado: se procesan en tu navegador.</p>
+    </section>
+
+    <!-- MAPEO COLECTIVO -->
+    <section class="pagina" id="p-mapeo" hidden>
+      <p class="ayuda">Creá un mapeo colectivo y compartí el link: cada persona marca lugares desde el celular, sin registrarse. Vos ves y descargás todos los aportes.</p>
+      <label class="campo">Título <input id="mc-titulo" type="text" maxlength="90" placeholder="Ej.: ¿Dónde falta iluminación en el barrio?"></label>
+      <label class="campo">Pregunta o consigna <textarea id="mc-pregunta" maxlength="300" rows="2" placeholder="Ej.: Marcá los lugares que te parecen inseguros de noche y contanos por qué."></textarea></label>
+      <label class="campo">Categorías (una por línea, hasta 8) <textarea id="mc-cats" rows="4">Problema o conflicto
+Lugar valorado
+Servicio que falta
+Lugar inseguro</textarea></label>
+      <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input id="mc-publico" type="checkbox"> Los participantes ven los aportes de los demás</label>
+      <button id="mc-crear" class="btn btn-primario" type="button">Crear mapeo (centrado en la vista actual)</button>
+      <div class="mensaje" id="mc-msg" hidden></div>
+      <div id="mc-mios"></div>
+    </section>
+
+    <!-- EXPORTAR / INFORME -->
+    <section class="pagina" id="p-exportar" hidden>
+      <p class="ayuda">Descargá los radios de la provincia cargada (o solo los de tu área, si dibujaste una) con todos los indicadores y tus variables.</p>
+      <div class="fila">
+        <button id="bajar-csv" class="btn btn-borde" type="button">CSV</button>
+        <button id="bajar-geojson" class="btn btn-borde" type="button">GeoJSON</button>
+      </div>
+      <label class="campo">Título del informe <input id="inf-titulo" type="text" maxlength="100" placeholder="Diagnóstico sociodemográfico"></label>
+      <button id="informe" class="btn btn-primario" type="button">Generar informe PDF</button>
+      <p class="ayuda">El informe incluye el mapa de la variable activa, su leyenda, los indicadores del área frente a la provincia y el país, el cruce si hay uno activo y las fuentes.</p>
+      <div class="mensaje" id="inf-msg" hidden></div>
+    </section>
+
+    <footer class="pie">
+      <p id="fuente"></p>
+      <p><a href="territorio.html">Demo gratuita</a> · <a href="./#contacto">Pedir un estudio a medida</a></p>
+    </footer>
+  </aside>
+  <main id="mapa" aria-label="Mapa"></main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="cs-comun.js?v=1"></script>
+<script src="cs-mapa.js?v=1"></script>
+<script src="territorio-pro.js?v=1"></script>
+<!-- Estadísticas de visitas: Cloudflare Web Analytics (sin cookies) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "91a02567f6fb489897042f0991a3ba9a"}'></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+:root{--tinta:#16201D;--texto:#3B4440;--gris:#5A625E;--linea:#DCDDD8;--fondo:#F6F6F3;--acento:#9A3F1C;--claro:#E3A383}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:Montserrat,system-ui,sans-serif;color:var(--tinta);background:var(--fondo)}
+h1,h2,h3,b,.marca strong{font-family:Inter,sans-serif}
+a{color:var(--acento)}
+.app{display:flex;height:100vh;height:100dvh}
+.panel{width:360px;flex:none;overflow-y:auto;background:#fff;border-right:1px solid var(--linea);display:flex;flex-direction:column}
+#mapa{flex:1;min-width:0}
+.marca{padding:18px 20px 14px;border-bottom:1px solid var(--linea)}
+.marca-nombre{font-size:19px;text-decoration:none;color:var(--tinta)}
+.marca-nombre span{color:var(--gris);font-weight:500}
+.marca-sub{margin:4px 0 0;font-size:13px;color:var(--gris)}
+.marca-sub.equipo{margin-top:8px;line-height:1.45}
+.marca-sub.equipo a{font-weight:600}
+.etiqueta{display:inline-block;font:700 10px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--acento);color:#fff;padding:2px 6px;border-radius:4px;margin-left:4px}
+.pestanas{display:flex;border-bottom:1px solid var(--linea)}
+.pestanas button{flex:1;padding:12px 8px;border:0;background:none;font:600 14px Inter,sans-serif;color:var(--gris);cursor:pointer;border-bottom:3px solid transparent}
+.pestanas button.activa{color:var(--tinta);border-bottom-color:var(--acento)}
+.pagina{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.pagina[hidden]{display:none}
+.campo{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:13px}
+select,input[type=text],input[type=number],textarea{font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid #A9ABA3;border-radius:6px;background:#fff;width:100%}
+.ayuda{margin:0;font-size:13px;line-height:1.5;color:var(--gris)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:6px;font:600 14px Inter,sans-serif;text-decoration:none;cursor:pointer;border:1px solid var(--tinta)}
+.btn-primario{background:var(--tinta);color:#fff}
+.btn-borde{background:#fff;color:var(--tinta)}
+.btn:disabled{opacity:.5;cursor:default}
+.fila{display:flex;gap:8px;flex-wrap:wrap}
+.fila .btn{flex:1}
+.ficha{border:1px solid var(--linea);border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.5}
+.ficha h3{margin:0 0 6px;font-size:15px}
+.ficha table{width:100%;border-collapse:collapse;font-size:13px}
+.ficha td{padding:3px 0;border-bottom:1px solid #EEEFEA;vertical-align:top}
+.ficha td:last-child{text-align:right;font-weight:600;white-space:nowrap;padding-left:8px}
+.pro-caja{border:2px solid var(--acento);border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.5;background:#FBF6F2}
+.pro-caja ul{margin:6px 0 12px;padding-left:18px;color:var(--texto)}
+.pro-caja .btn{width:100%}
+.pie{margin-top:auto;padding:14px 20px 18px;border-top:1px solid var(--linea);font-size:12px;line-height:1.5;color:var(--gris)}
+.pie p{margin:0 0 6px}
+.leyenda{background:#fff;padding:10px 12px;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.2);font:12px/1.5 Montserrat,sans-serif;max-width:240px}
+.leyenda b{display:block;margin-bottom:4px;font-size:12px}
+.ley-fila{display:flex;align-items:center;gap:6px}
+.ley-fila i{width:14px;height:12px;border:1px solid rgba(0,0,0,.15);flex:none}
+.cargando{position:absolute;z-index:900;top:12px;left:50%;transform:translateX(-50%);background:var(--tinta);color:#fff;font:600 12px Inter,sans-serif;padding:7px 14px;border-radius:14px}
+.mc-lista{list-style:none;margin:0;padding:0;font-size:13px}
+.mc-lista li{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-top:1px solid #EEEFEA}
+.mc-lista li i{width:12px;height:12px;border-radius:50%;flex:none;margin-top:4px}
+.mc-lista li span{flex:1}
+.mc-lista button{border:0;background:none;color:var(--acento);cursor:pointer;font-size:12px}
+.mc-form{display:flex;flex-direction:column;gap:6px;min-width:220px;font:13px Montserrat,sans-serif}
+.mc-form textarea{min-height:70px}
+@media (max-width:760px){
+  .app{flex-direction:column-reverse}
+  .panel{width:auto;height:46vh;border-right:0;border-top:1px solid var(--linea)}
+  #mapa{height:54vh;flex:none}
+}

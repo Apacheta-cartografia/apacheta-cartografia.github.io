@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapeo colectivo — Apacheta Cartografía</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="territorio.css?v=1">
+<style>
+.cats{display:flex;flex-direction:column;gap:6px}
+.cats label{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--linea);border-radius:8px;font-size:14px;cursor:pointer}
+.cats label i{width:14px;height:14px;border-radius:50%;flex:none}
+.cats input{accent-color:var(--acento)}
+.gracias{font-size:14px;line-height:1.5;padding:10px 12px;border-radius:8px;background:#E2F1EC;color:#2E7D6B}
+.gracias[hidden]{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <header class="marca">
+      <a href="./" class="marca-nombre"><strong>Apacheta</strong> <span>Cartografía</span></a>
+      <p class="marca-sub">Mapeo colectivo</p>
+    </header>
+    <section class="pagina">
+      <h2 id="titulo" style="margin:0;font-size:19px">Cargando…</h2>
+      <p id="pregunta" class="ayuda" style="font-size:14px;color:var(--texto)"></p>
+      <div class="cats" id="cats"></div>
+      <p class="ayuda" id="paso">1. Elegí una categoría. 2. Tocá el lugar en el mapa. 3. Contanos qué pasa ahí y enviá.</p>
+      <label class="campo">Comentario <textarea id="txt" maxlength="400" rows="3" placeholder="¿Qué pasa en este lugar?"></textarea></label>
+      <button id="enviar" class="btn btn-primario" type="button" disabled>Enviar aporte</button>
+      <div class="gracias" id="gracias" hidden></div>
+      <p class="ayuda">No escribas nombres, teléfonos ni datos personales. Los aportes son anónimos.</p>
+    </section>
+    <footer class="pie"><p>Hecho con la herramienta de mapeo colectivo de <a href="./" target="_blank" rel="noopener">Apacheta Cartografía</a>, un equipo de geógrafos, sociólogos y programadores.</p></footer>
+  </aside>
+  <main id="mapa" aria-label="Mapa"></main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var API = 'https://apacheta-pro.apacheta-cartografia.workers.dev';
+  var COLS = ['#C0392B', '#2E7D6B', '#D68910', '#7D3C98', '#1F6FEB', '#4A524E', '#B03A6E', '#117A65'];
+  var $ = function (id) { return document.getElementById(id); };
+  var id = (new URLSearchParams(location.search).get('p') || '').replace(/[^a-f0-9]/g, '');
+  var map = L.map('mapa').setView([-34.6, -64], 5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap', maxZoom: 19 }).addTo(map);
+  var marca = null, lugar = null, cfg = null, enviados = 0;
+  function esc(t) { var d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; }
+  function listo() { $('enviar').disabled = !(lugar && document.querySelector('input[name=cat]:checked')); }
+  if (!id) { $('titulo').textContent = 'Falta el link del mapeo.'; return; }
+  fetch(API + '/mc/cfg?p=' + id).then(function (r) { return r.json(); }).then(function (j) {
+    if (!j.ok) throw new Error();
+    cfg = j.cfg;
+    document.title = cfg.titulo + ' — Mapeo colectivo';
+    $('titulo').textContent = cfg.titulo; $('pregunta').textContent = cfg.pregunta || '';
+    $('cats').innerHTML = cfg.categorias.map(function (c, i) { return '<label><input type="radio" name="cat" value="' + esc(c) + '"><i style="background:' + COLS[i] + '"></i>' + esc(c) + '</label>'; }).join('');
+    document.querySelectorAll('input[name=cat]').forEach(function (r) { r.addEventListener('change', listo); });
+    if (cfg.centro) map.setView([cfg.centro[0], cfg.centro[1]], cfg.centro[2] || 13);
+    if (cfg.publico) fetch(API + '/mc/aportes?p=' + id).then(function (r) { return r.json(); }).then(function (a) {
+      (a.aportes || []).forEach(function (p) { var k = cfg.categorias.indexOf(p.c); L.circleMarker([p.la, p.lo], { radius: 6, color: '#fff', weight: 2, fillColor: COLS[k < 0 ? 5 : k], fillOpacity: .9 }).bindPopup('<b>' + esc(p.c) + '</b><br>' + esc(p.t)).addTo(map); });
+    }).catch(function () {});
+  }).catch(function () { $('titulo').textContent = 'Este mapeo no existe o ya no está disponible.'; });
+  map.on('click', function (e) {
+    lugar = e.latlng;
+    if (marca) marca.setLatLng(lugar); else marca = L.marker(lugar).addTo(map);
+    listo();
+  });
+  $('enviar').addEventListener('click', function () {
+    var cat = document.querySelector('input[name=cat]:checked');
+    if (!lugar || !cat) return;
+    var b = this; b.disabled = true; b.textContent = 'Enviando…';
+    fetch(API + '/mc/aporte', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ p: id, lat: lugar.lat, lon: lugar.lng, cat: cat.value, txt: $('txt').value }) })
+      .then(function (r) { return r.json(); }).then(function (j) {
+        if (!j.ok) throw new Error(j.error);
+        enviados++;
+        var k = cfg.categorias.indexOf(cat.value);
+        L.circleMarker(lugar, { radius: 7, color: '#fff', weight: 2, fillColor: COLS[k], fillOpacity: 1 }).addTo(map);
+        if (marca) { map.removeLayer(marca); marca = null; } lugar = null; $('txt').value = '';
+        $('gracias').textContent = '¡Gracias! Tu aporte quedó guardado' + (enviados > 1 ? ' (' + enviados + ' en total)' : '') + '. Podés sumar otro lugar.'; $('gracias').hidden = false;
+      }).catch(function (e) {
+        $('gracias').textContent = e.message === 'limite' ? 'Llegaste al máximo de aportes por hoy. ¡Gracias!' : 'No se pudo enviar. Probá de nuevo.'; $('gracias').hidden = false;
+      }).then(function () { b.textContent = 'Enviar aporte'; listo(); });
+  });
+})();
+</script>
+<!-- Estadísticas de visitas: Cloudflare Web Analytics (sin cookies) -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "91a02567f6fb489897042f0991a3ba9a"}'></script>
+</body>
+</html>
