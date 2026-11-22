@@ -101,6 +101,12 @@ dt{color:var(--gris)}dd{margin:2px 0 0;font-weight:600}
 /* Equipo */
 .equipo-intro{display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;margin-bottom:36px}
 .equipo-intro>*{flex:1 1 420px;min-width:0}
+.disciplinas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:36px}
+.disciplinas>div{border-top:3px solid var(--acento);padding-top:16px}
+.disciplinas h3{margin:0 0 8px;font-size:19px}
+.disciplinas p{margin:0;font-size:15px;line-height:1.6;color:var(--texto)}
+.equipo-nota{margin:32px 0 0;font-size:17px;line-height:1.6;color:var(--texto);max-width:46rem}
+.equipo-nota a{font-weight:600}
 .tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
 .tarjetas article{background:#FFFFFF;border:1px solid var(--linea);border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:10px}
 .tarjetas h3{margin:0;font-size:19px}
@@ -167,7 +173,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
     <div class="portada-texto">
       <p class="kicker">Consultoría territorial · Mendoza, Argentina</p>
       <h1>Información territorial rigurosa para planificar, gestionar y decidir.</h1>
-      <p class="bajada">Análisis espaciales, socioeconómicos y socioambientales, y cartografía profesional para organismos públicos, organizaciones, empresas y productores.</p>
+      <p class="bajada">Somos un equipo de geógrafos, sociólogos y programadores. Hacemos análisis espaciales, socioeconómicos y socioambientales, cartografía profesional y herramientas web para organismos públicos, organizaciones, empresas y productores.</p>
       <div class="acciones">
         <a class="btn btn-primario" href="visor.html" target="_blank" rel="noopener">Explorar el visor ↗</a>
         <a class="btn btn-borde" href="#contacto">Solicitar una propuesta</a>
@@ -230,7 +236,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
         <a class="btn btn-borde" href="mapa-pro.html" target="_blank" rel="noopener">Versión Pro ↗</a>
       </div>
       <p class="arma-pie">La versión Pro suma escala exacta, grilla UTM, curvas de nivel, tu track GPX, hojas hasta A1 y PDF georreferenciado: pack de 5 mapas a $10.000.</p>
-      <p class="arma-pie">Es un mapa orientativo, armado con datos abiertos. Si lo necesitás para un proyecto, una obra o un informe, <a href="#a-medida">no uses la app: contratanos</a>.</p>
+      <p class="arma-pie">Detrás de esta herramienta hay un equipo de geógrafos, sociólogos y programadores. La app está para usarse; si tu proyecto, tu obra o tu informe necesitan algo pensado para ese territorio, <a href="#a-medida">lo armamos a medida</a>.</p>
     </div>
     <div class="arma-col">
       <h3>Vos elegís</h3>
@@ -261,7 +267,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
     <div class="encabezado">
       <p class="kicker">Proyectos a medida</p>
       <h2 class="titulo">¿Necesitás precisión? Trabajá con nuestro equipo</h2>
-      <p class="bajada">El visor y «Armá tu mapa» son herramientas libres para explorar y salir a la montaña. Cuando el mapa tiene que respaldar una decisión, un expediente o una obra, lo hacemos nosotros.</p>
+      <p class="bajada">El visor y «Armá tu mapa» están para usarse: los hicimos para que cualquiera explore y salga a la montaña. Pero un proyecto pensado para tu territorio, tus preguntas y tus datos siempre va a dar un resultado mejor. Ahí entra el equipo que está detrás: geógrafos, sociólogos y programadores trabajando sobre tu caso.</p>
     </div>
     <div class="comparar">
       <div class="caja">
@@ -278,6 +284,7 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
         <h3>Proyecto con Apacheta</h3>
         <p class="sub">Para organismos, empresas, organizaciones, productores y profesionales.</p>
         <ul>
+          <li>Un equipo de geógrafos, sociólogos y programadores dedicado a tu caso</li>
           <li>Datos propios y verificados: relevamiento de campo, GPS, imágenes satelitales y fuentes oficiales</li>
           <li>Escala exacta, sistema de coordenadas y precisión acordes al uso</li>
           <li>Análisis territorial, socioeconómico y socioambiental, no solo el mapa</li>
@@ -378,8 +385,14 @@ footer .marca{color:#FFFFFF;font-size:17px}footer .marca span{color:var(--suave)
         <p class="kicker">Quiénes somos</p>
         <h2 class="titulo">Un equipo interdisciplinario</h2>
       </div>
-      <p class="bajada">Somos una consultora joven compuesta por profesionales de diferentes disciplinas. Combinamos la geografía y los sistemas de información geográfica con otros campos del conocimiento para abordar cada territorio de manera integral.</p>
+      <p class="bajada">Somos una consultora joven de geógrafos, sociólogos y programadores. Combinamos el análisis espacial con la mirada social y el desarrollo de herramientas para abordar cada territorio de manera integral.</p>
     </div>
+    <div class="disciplinas">
+      <div><h3>Geografía y SIG</h3><p>Análisis espacial, cartografía, teledetección y relevamiento en campo. Escalas, coordenadas y precisión acordes a cada uso.</p></div>
+      <div><h3>Sociología</h3><p>Entrevistas, encuestas, datos censales y mapeo participativo. Las personas y los actores detrás de cada territorio.</p></div>
+      <div><h3>Programación</h3><p>Visores web, bases de datos geográficas y herramientas como las de este sitio, hechas a la medida de cada organización.</p></div>
+    </div>
+    <p class="equipo-nota">Las herramientas gratuitas de este sitio las desarrollamos nosotros. Imaginate lo que podemos hacer pensando en tu proyecto. <a href="#contacto">Contanos qué necesitás</a>.</p>
   </div>
 </section>
 
